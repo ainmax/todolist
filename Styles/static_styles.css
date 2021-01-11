@@ -1,0 +1,174 @@
+.block {
+    border: inherit;
+    margin-left: 1%;
+    width: 85%;
+    min-height: 45px;
+    font-size: 0.8em;
+    font-family: Verdana;
+    display: block;
+    float: left;
+    outline: none;
+    cursor: text;
+    color: black;
+    resize: none;
+    transition: background-color 0.3s;
+}
+
+.dragZone {
+    height: 2.7em;
+    width: 1.5em;
+    margin-left: 1%;
+    display: block;
+    float: left;
+    cursor: pointer;
+    background-image: url("C:/Users/auhyp/Desktop/Project/Images/menubuttonofthreelines_79781.jpg");
+    background-size: 1.1em 1.5em;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+
+.archivedBlock {
+    width: 68%;
+    height: 45px;
+    font-size: 16px;
+    font-family: Verdana;
+    display: block;
+    float: left;
+    overflow-y: auto;
+    padding: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.task {
+    width: 70%;
+    display: block;
+    min-height: 50px;
+    margin-bottom: 6px;
+    transition: background-color 0.3s;
+}
+
+.archivedTask {
+    width: 76.5%;
+    display: block;
+    height: 50px;
+    padding: 6px;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.complete_ikon {
+    background-image: url("C:/Users/auhyp/Desktop/Project/Images/InversedOkIkon.jpg");
+    height: 1.2em;
+    width: 1.6em;
+    margin-top: 0.3em;
+    margin-left: 1%;
+    display: block;
+    float: left;
+    background-size: 1.2em 1.6em;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.listChild {
+    border-top: 3px dashed rgba(0, 0, 0, 0.200);
+    min-height: 50px;
+    padding: 6px;
+    padding-bottom: 1px;
+    width: 80%;
+    margin: 12px;
+}
+
+.date_indicator {
+    text-align: right;
+    font-size: 1.4em;
+    padding: 1px;
+    color: rgba(0, 0, 0, 0.230);
+    font-family: roboto;
+    font-weight: 500;
+    float: right;
+}
+
+#archive {
+    display: block;
+    min-height: 60px;
+    width: 91%;
+    margin-left: 3%;
+    top: 0;
+    transition: background-color 0.3s;
+}
+
+#done {
+    width: 80%;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-left: 12px;
+}
+
+#done>div {
+    text-align: right;
+    font-size: 1.4em;
+    padding: 1px;
+    color: rgba(0, 0, 0, 0.230);
+    font-family: roboto;
+    font-weight: 500;
+}
+
+#list {
+    text-align: center;
+    display: block;
+    width: 91%;
+    margin-left: 3%;
+}
+
+body {
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#delete_zone {
+    position: fixed;
+    background-color: rgba(255, 82, 82, 0.57);
+    background-image: url("C:/Users/auhyp/Desktop/Project/Images/delete.jpg");
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: 50% 50%;
+    width: 9em;
+    height: 9em;
+    z-index: 100;
+    right: 1%;
+    bottom: 19%;
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: none;
+}
+
+#textarea {
+    resize: none;
+    width: 75%;
+    position: fixed;
+    left: 1%;
+    bottom: 1%;
+    height: 12%;
+    border-radius: 7px 7px 7px;
+    background-color: rgb(255, 255, 255);
+    font-size: 18px;
+    outline: none;
+    box-shadow: black 2px 3px 7px;
+}
+
+#ta2 {
+    width: 20%;
+    position: fixed;
+    bottom: 4%;
+    right: 3%;
+    height: 12%;
+    resize: none;
+    font-size: 18px;
+    border-radius: 7px 7px 7px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgb(60, 60, 60) 18px 22px 11px;
+    outline: none;
+}

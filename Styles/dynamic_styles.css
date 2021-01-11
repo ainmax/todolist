@@ -1,0 +1,48 @@
+.task:hover {
+    background-color: rgb(209, 209, 209);
+}
+
+.archivedTask:nth-last-child(2) {
+    float: left;
+}
+
+.task:hover>textarea {
+    background-color: rgb(209, 209, 209);
+}
+
+.archivedTask:hover>:last-child {
+    background-color: rgb(209, 209, 209);
+}
+
+div[ismoving] {
+    z-index: 1000;
+    position: absolute;
+    width: 50.5%;
+    background-color: rgb(109, 109, 109) !important;
+}
+
+div[ismoving]>textarea {
+    color: white;
+    background-color: rgb(109, 109, 109) !important;
+}
+
+[oldValue] {
+    cursor: text;
+    background-color: rgba(137, 43, 226, 0.323) !important;
+}
+
+.welcome_letters {
+    transition: opacity 1s;
+    opacity: 0;
+}
+
+#welcome {
+    text-align: center;
+    transition: opacity 0.2s;
+    margin-top: 250px;
+    font-size: 40px;
+}
+
+.loading_page {
+    height: 100%;
+}
