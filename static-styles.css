@@ -21,7 +21,7 @@
     display: block;
     float: left;
     cursor: pointer;
-    background-image: url("C:/Users/auhyp/Desktop/Project/Images/menubuttonofthreelines_79781.jpg");
+    background-image: url("images/menubuttonofthreelines_79781.jpg");
     background-size: 1.1em 1.5em;
     background-repeat: no-repeat;
     background-position: top;
@@ -58,7 +58,7 @@
 }
 
 .complete_ikon {
-    background-image: url("C:/Users/auhyp/Desktop/Project/Images/InversedOkIkon.jpg");
+    background-image: url("images/InversedOkIkon.jpg");
     height: 1.2em;
     width: 1.6em;
     margin-top: 0.3em;
@@ -131,7 +131,7 @@ body {
 #delete_zone {
     position: fixed;
     background-color: rgba(255, 82, 82, 0.57);
-    background-image: url("C:/Users/auhyp/Desktop/Project/Images/delete.jpg");
+    background-image: url("images/delete.jpg");
     background-repeat: no-repeat;
     background-size: 50%;
     background-position: 50% 50%;
