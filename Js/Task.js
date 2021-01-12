@@ -78,9 +78,9 @@ class Task {
 
                     list.deleteTask(target.id.substring(1));
                     list.visualisate(false);
+
                     dragShiftX = undefined;
                     dragShiftY = undefined;
-
                     let
                         planObject = System.getIt("planObject", true);
 
