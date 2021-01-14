@@ -11,7 +11,7 @@ let
     dragShiftY;
 
 document.addEventListener("DOMContentLoaded", () => {
-    Page.loadingOn();
+    Page.load();
 });
 
 class Page {
@@ -112,30 +112,5 @@ class Page {
             oldTAvalue = newTAvalue;
             newTAvalue = event.target.value;
         });
-    }
-
-    static loadingOn() {
-        let
-            welcome = "Welcome";
-
-        for (let i = 0; i < 6; i++) {
-            setTimeout(() => {
-                document.getElementById(welcome[i]).style = "opacity: 1;";
-            }, i * 150);
-        }
-
-        setTimeout(() => {
-            document.getElementById(welcome[6] + "_last").style = "opacity: 1;";
-        }, 6 * 150);
-
-        setTimeout(() => {
-            document.getElementById("welcome").style = "opacity: 0;";
-
-            setTimeout(() => {
-                document.getElementById("welcome").style = "display: none;";
-                document.getElementById("todo_page").style = "display: block;";
-                new Page().load();
-            }, 200);
-        }, 2000);
     }
 }

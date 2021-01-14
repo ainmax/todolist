@@ -30,19 +30,3 @@ div[ismoving]>textarea {
     cursor: text;
     background-color: rgba(137, 43, 226, 0.323) !important;
 }
-
-.welcome_letters {
-    transition: opacity 1s;
-    opacity: 0;
-}
-
-#welcome {
-    text-align: center;
-    transition: opacity 0.2s;
-    margin-top: 250px;
-    font-size: 40px;
-}
-
-.loading_page {
-    height: 100%;
-}
