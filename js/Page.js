@@ -42,7 +42,7 @@ class Page {
             System.setIt("archiveObject", {}, true);
         }
 
-        this._addEventListeners();
+        new Page()._addEventListeners();
     }
 
     _addEventListeners() {
