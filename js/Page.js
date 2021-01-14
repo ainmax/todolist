@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 class Page {
-    load() {
+    static load() {
         if (System.getIt("planObject", false) != null) {
             let
                 list = new List(System.getIt("planObject", true));
