@@ -152,23 +152,19 @@ body {
     left: 1%;
     bottom: 1%;
     height: 12%;
-    border-radius: 7px 7px 7px;
     background-color: rgb(255, 255, 255);
     font-size: 18px;
     outline: none;
-    box-shadow: black 2px 3px 7px;
 }
 
 #ta2 {
     width: 20%;
     position: fixed;
-    bottom: 4%;
     right: 3%;
+    bottom: 1%;
     height: 12%;
     resize: none;
     font-size: 18px;
-    border-radius: 7px 7px 7px;
     background-color: rgb(255, 255, 255);
-    box-shadow: rgb(60, 60, 60) 18px 22px 11px;
     outline: none;
 }
