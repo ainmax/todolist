@@ -29,32 +29,12 @@ class System {
         return value;
     }
 
-    /*
-    static sumDates(date1, date2) {
+    static sumDates(datein, days) {
         let
             remainder = 0,
-            resultDate = "";
-
-        resultDate = (Number(date1.substring(12)) + Number(date2.substring(12))) % 60 + "";
-        if (((Number(date1.substring(12)) + Number(date2.substring(12))) % 60 + "").length != 2) {
-            resultDate = "0" + resultDate;
-        }
-
-        remainder = (Number(date1.substring(12)) + Number(date2.substring(12))) / 60;
-
-        resultDate = (Number(date1.substring(10, 12)) + Number(date2.substring(10, 12)) + Math.floor(remainder)) % 60 + resultDate;
-        if (((Number(date1.substring(10, 12)) + Number(date2.substring(10, 12)) + Math.floor(remainder)) % 60 + "").length != 2) {
-            resultDate = "0" + resultDate;
-        }
-
-        remainder = (Number(date1.substring(10, 12)) + Number(date2.substring(10, 12))) / 60;
-
-        resultDate = (Number(date1.substring(8, 10)) + Number(date2.substring(8, 10)) + Math.floor(remainder)) % 24 + resultDate;
-        if (((Number(date1.substring(8, 10)) + Number(date2.substring(8, 10)) + Math.floor(remainder)) % 24 + "").length != 2) {
-            resultDate = "0" + resultDate;
-        }
-
-        remainder = (Number(date1.substring(8, 10)) + Number(date2.substring(8, 10))) / 24;
+            years = Number(datein.substring(0, 4)),
+            date = datein,
+            mounths = Number(datein.substring(4, 6));
 
         let
             days31 = [
@@ -80,28 +60,66 @@ class System {
                 "02"
             ];
 
-        if (days31.includes(date1.substring(4, 6))) {
-            resultDate = (Number(date1.substring(6, 8)) + Number(date2.substring(6, 8)) + Math.floor(remainder)) % 32 + resultDate;
-            if (((Number(date1.substring(6, 8)) + Number(date2.substring(6, 8)) + Math.floor(remainder)) % 32 + "").length != 2) {
-                resultDate = "0" + resultDate;
+        if (days31.includes(date.substring(4, 6))) {
+            days = Number(date.substring(6, 8)) + Number(days);
+
+            if (Math.floor(days / 31) == 1) {
+                remainder = days % 31;
+
+                if (Math.floor(days / 32) == 1) {
+                    days = remainder;
+                }
             }
-        } else if (days30.includes(date1.substring(4, 6))) {
-            resultDate = (Number(date1.substring(6, 8)) + Number(date2.substring(6, 8)) + Math.floor(remainder)) % 31 + resultDate;
-            if (((Number(date1.substring(6, 8)) + Number(date2.substring(6, 8)) + Math.floor(remainder)) % 31 + "").length != 2) {
-                resultDate = "0" + resultDate;
+        } else if (days30.includes(date.substring(4, 6))) {
+            days = Number(date.substring(6, 8)) + Number(days);
+
+            if (Math.floor(days / 30) == 1) {
+                remainder = days % 30;
+
+                if (Math.floor(days / 31) == 1) {
+                    days = remainder;
+                }
+            }
+        } else if (days28.includes(date.substring(4, 6))) {
+            days = Number(date.substring(6, 8)) + Number(days);
+
+            if (Math.floor(days / 28) == 1) {
+                remainder = days % 28;
+
+                if (Math.floor(days / 29) == 1) {
+                    days = remainder;
+                }
             }
         } else {
-            resultDate = (Number(date1.substring(6, 8)) + Number(date2.substring(6, 8)) + Math.floor(remainder)) % 29 + resultDate;
-            if (((Number(date1.substring(6, 8)) + Number(date2.substring(6, 8)) + Math.floor(remainder)) % 29 + "").length != 2) {
-                resultDate = "0" + resultDate;
+            console.error("!In function sumDates error!", "date, days:", date, keys);
+        }
+
+        days = String(days);
+
+        if (days.length == 1) {
+            days = "0" + days;
+        }
+
+
+        if (remainder != 0) {
+            mounths++;
+
+            if (mounths / 13 == 1) {
+                mounths = mounths % 12;
+                years++;
             }
         }
 
-        resultDate = date1.substring(0, 4) + resultDate;
+        mounths = String(mounths);
 
-        return resultDate;
+        if (mounths.length == 1) {
+            mounths = `0${mounths}`;
+        }
+
+        date = String(years) + mounths + String(days) + date.substring(9);
+
+        return date;
     }
-    */
 
     static getIt(key, jsonParse) {
         try {

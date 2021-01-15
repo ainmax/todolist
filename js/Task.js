@@ -215,7 +215,7 @@ class Task {
             planObject = new List(System.getIt("planObject", true)).convertToPrimitiveObj();
 
         if (isTaskFromUser) {
-            timeOfPlan = String(Number(this.dateOfCreation) + Number(document.getElementById("ta2").value) * 1000000);
+            timeOfPlan = System.sumDates(String(this.dateOfCreation), document.getElementById("ta2").value);
         } else {
             timeOfPlan = planObject[Number(this.dateOfCreation)][1];
         }
