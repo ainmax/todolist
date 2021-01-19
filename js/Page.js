@@ -65,6 +65,8 @@ class Page {
             }
         });
 
+        document.onselectstart = () => { return false; }
+
         document.addEventListener("keydown", (event) => {
             if (event.key == "Enter") {
                 isEnter = true;
