@@ -13,13 +13,18 @@ class Task {
             elem = event.target;
 
         document.getElementById("archive").style = `background-color: rgba(0, 255, 0, 0.467);`;
-        document.querySelector("#done>div").style = `color: white;`;
 
         document.getElementById("delete_zone").style = `display: block; opacity: 0;`;
 
         setTimeout(() => {
             document.getElementById("delete_zone").style = `display: block; opacity: 1;`;
         }, 10);
+
+        for (let prop of document.querySelectorAll(".complete_ikon")) {
+            prop.style = "background-image: url('images/complete-ikon.jpg');";
+        }
+
+        document.querySelector("#done>div").style = `color: white;`;
 
         elem.parentNode.setAttribute("isMoving", "true");
     }
@@ -110,8 +115,13 @@ class Task {
 
         event.target.removeEventListener("mousemove", Task.beginDrag, { capture: false, once: true, passive: false });
         document.getElementById("archive").removeAttribute("style");
-        document.querySelector("#done>div").removeAttribute("style");
         document.getElementById("delete_zone").style = "display: block; opacity: 0;";
+
+        for (let prop of document.querySelectorAll(".complete_ikon")) {
+            prop.removeAttribute("style");
+        }
+
+        document.querySelector("#done>div").removeAttribute("style");
 
         setTimeout(() => {
             document.getElementById("delete_zone").removeAttribute("style");

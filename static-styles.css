@@ -58,7 +58,7 @@
 }
 
 .complete_ikon {
-    background-image: url("images/InversedOkIkon.jpg");
+    background-image: url("images/inversed-complete-ikon.jpg");
     height: 1.2em;
     width: 1.6em;
     margin-top: 0.3em;
@@ -95,7 +95,6 @@
     width: 91%;
     margin-left: 3%;
     top: 0;
-    transition: background-color 0.3s;
 }
 
 #done {
