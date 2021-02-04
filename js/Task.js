@@ -39,16 +39,16 @@ class Task {
 
             document.querySelector("[isMoving]").style.display = "none";
 
-            if (event.pageY <= document.getElementById("archive").offsetHeight) {
-                let
-                    archive = new Archive(System.getIt("archiveObject", true));
-
-                archive.setTask(target.lastChild.value, target.lastChild.id, System.getIt("planObject", true)[target.lastChild.id][1]);
+            if (document.elementFromPoint(event.clientX, event.clientY).id == "delete_zone") {
                 list.deleteTask(target.id.substring(1));
                 list.visualisate(false);
                 dragShiftX = undefined;
                 dragShiftY = undefined;
-            } else if (document.elementFromPoint(event.clientX, event.clientY).id == "delete_zone") {
+            } else if (event.pageY <= document.getElementById("archive").offsetHeight) {
+                let
+                    archive = new Archive(System.getIt("archiveObject", true));
+
+                archive.setTask(target.lastChild.value, target.lastChild.id, System.getIt("planObject", true)[target.lastChild.id][1]);
                 list.deleteTask(target.id.substring(1));
                 list.visualisate(false);
                 dragShiftX = undefined;
@@ -132,6 +132,9 @@ class Task {
         let
             target = event.target;
 
+        target.parentNode.firstChild.setAttribute("style", "display: none;");
+
+        target.setAttribute("style", "width: 100%; margin: 0; height: 100%; padding: 0; background-color: rgb(0, 0, 0, 0.1);");
         target.setAttribute("oldValue", `${target.value}`);
         target.removeAttribute('readonly');
     }
@@ -158,6 +161,9 @@ class Task {
 
         target.setAttribute("readonly", "readonly");
         target.removeAttribute("oldValue");
+        target.removeAttribute("style");
+
+        target.parentNode.firstChild.removeAttribute("style");
     }
 
     getDOMdata() {
@@ -208,7 +214,7 @@ class Task {
         System.setIt("planObject", list.convertToPrimitiveObj(), true);
     }
 
-    getPositionData(isTaskFromUser) {
+    getPositionData(isTaskFromUser, area) {
         let
             parentIsFirst = false,
             listDateArray = new Array(),
@@ -222,7 +228,7 @@ class Task {
             dateIndicator = document.createElement("div");
 
         let
-            planObject = new List(System.getIt("planObject", true)).convertToPrimitiveObj();
+            planObject = area.convertToPrimitiveObj();
 
         if (isTaskFromUser) {
             timeOfPlan = System.sumDates(String(this.dateOfCreation), document.getElementById("ta2").value);
@@ -231,7 +237,9 @@ class Task {
         }
 
         for (let i = 0; i < list.childNodes.length; i++) {
-            listDateArray.push(list.childNodes[i].id.substring(2));
+            if (list.childNodes[i].className == "listChild") {
+                listDateArray.push(list.childNodes[i].id.substring(2));
+            }
         }
 
         for (let i = 0; i < listDateArray.length; i++) {

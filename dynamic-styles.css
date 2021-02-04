@@ -28,5 +28,5 @@ div[ismoving]>textarea {
 
 [oldValue] {
     cursor: text;
-    background-color: rgba(137, 43, 226, 0.323) !important;
+    background-color: rgb(213, 168, 255) !important;
 }

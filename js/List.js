@@ -26,7 +26,7 @@ class List {
 
             if (isTaskNew) {
                 currentTask.DOMdata = currentTask.getDOMdata();
-                currentTask.positionData = currentTask.getPositionData(isTasksFromUser);
+                currentTask.positionData = currentTask.getPositionData(isTasksFromUser, new List(this.convertToPrimitiveObj()));
 
                 if (currentTask.positionData.newTimeProve && !currentTask.positionData.parentIsFirst) {
 
@@ -69,25 +69,7 @@ class List {
                 let
                     list = document.getElementById("list"),
                     idElem = block.id.substring(1),
-                    elemParent;
-
-                let
-                    planObject = System.getIt("planObject", true);
-
-                for (let i = 0; i < list.childNodes.length; i++) {
-                    if (list.childNodes[i].getAttribute("tasksterm").substring(0, 8) == planObject[Number(idElem)][1].substring(0, 8)) {
-                        elemParent = list.childNodes[i];
-                        break;
-                    }
-                }
-
-                localStorage.removeItem("planObject");
-
-                delete planObject[Number(idElem)];
-
-                if (planObject != {}) {
-                    System.setIt("planObject", planObject, true);
-                }
+                    elemParent = block.parentNode;
 
                 document.getElementById("p" + idElem).remove();
 
@@ -139,6 +121,25 @@ class List {
         list.visualisate(false);
     }
 
+    addTask(isTaskNew, dateOfCreation, taskTerm, value) {
+        if (!isTaskNew || /\S/.test(value)) {
+            if (/\D/.test(String(taskTerm))) {
+                taskTerm = System.getDate();
+            }
+
+            let
+                currentTask = new Task(value, dateOfCreation, taskTerm);
+
+            if (isTaskNew) {
+                currentTask.save();
+            }
+
+            this.listOfTasks[dateOfCreation] = currentTask;
+        } else {
+            console.log("Чтобы оставить задачу введите текст.");
+        }
+    }
+
     addEmptyToday() {
         const
             parentParent = document.createElement("div"),
@@ -159,27 +160,18 @@ class List {
         parentParent.prepend(dateIndicator);
     }
 
-    addTask(isTaskNew, dateOfCreation, taskTerm, value) {
-        if (!isTaskNew || /\S/.test(value)) {
-            if (/\D/.test(String(taskTerm))) {
-                taskTerm = System.getDate();
-            }
-
-            let
-                currentTask = new Task(value, dateOfCreation, taskTerm);
-
-            if (isTaskNew) {
-                currentTask.save();
-            }
-
-            this.listOfTasks[dateOfCreation] = currentTask;
-        } else {
-            console.log("Чтобы оставить задачу введите текст.");
-        }
-    }
-
     deleteTask(dateOfCreation) {
+        let
+            planObject = System.getIt("planObject", true);
+
+        localStorage.removeItem("planObject");
+
+        delete planObject[Number(dateOfCreation)];
         delete this.listOfTasks[dateOfCreation];
+
+        if (planObject != {}) {
+            System.setIt("planObject", planObject, true);
+        }
     }
 
     convertToPrimitiveObj() {

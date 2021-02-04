@@ -1,6 +1,7 @@
 let
     isShift = false,
-    isEnter = false;
+    isEnter = false,
+    isTextareaFocused = false;
 
 let
     oldTAvalue = "",
@@ -70,23 +71,7 @@ class Page {
         document.addEventListener("keydown", (event) => {
             if (event.key == "Enter") {
                 isEnter = true;
-                if (isShift) {
-                    setTimeout(() => {
-                        let
-                            list = new List(System.getIt("planObject", true)),
-                            dateOfCreation = System.getDate();
-
-                        list.addTask(true, dateOfCreation, String(Number(dateOfCreation) + Number(document.getElementById("ta2").value) * 1000000), newTAvalue);
-                        list.visualisate(true);
-                    }, 200);
-
-                    isEnter = false;
-                }
-            }
-
-            if (event.key == "Shift") {
-                isShift = true;
-                if (isEnter) {
+                if (isShift && isTextareaFocused) {
                     setTimeout(() => {
                         let
                             list = new List(System.getIt("planObject", true)),
@@ -95,9 +80,46 @@ class Page {
                         list.addTask(true, dateOfCreation, String(Number(dateOfCreation) + Number(document.getElementById("ta2").value) * 1000000), oldTAvalue);
                         list.visualisate(true);
                     }, 200);
+
+                    let
+                        audio = new Audio();
+
+                    audio.src = "C:/Users/Айнур/Desktop/todolist/js/sounds/Sound_08029.mp3";
+                    audio.play();
+
+                    isEnter = false;
+                }
+            }
+
+            if (event.key == "Shift") {
+                isShift = true;
+                if (isEnter && isTextareaFocused) {
+                    setTimeout(() => {
+                        let
+                            list = new List(System.getIt("planObject", true)),
+                            dateOfCreation = System.getDate();
+
+                        list.addTask(true, dateOfCreation, String(Number(dateOfCreation) + Number(document.getElementById("ta2").value) * 1000000), oldTAvalue);
+                        list.visualisate(true);
+                    }, 200);
+
+                    let
+                        audio = new Audio();
+
+                    audio.src = "C:/Users/Айнур/Desktop/todolist/js/sounds/Sound_08029.mp3";
+                    audio.play();
+
                     isShift = false;
                 }
             }
+        });
+
+        document.querySelector("#textarea").addEventListener("focus", () => {
+            isTextareaFocused = true;
+        });
+
+        document.querySelector("#textarea").addEventListener("blur", () => {
+            isTextareaFocused = false;
         });
 
         document.addEventListener("keyup", (event) => {
