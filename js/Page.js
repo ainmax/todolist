@@ -81,12 +81,6 @@ class Page {
                         list.visualisate(true);
                     }, 200);
 
-                    let
-                        audio = new Audio();
-
-                    audio.src = "C:/Users/Айнур/Desktop/todolist/js/sounds/Sound_08029.mp3";
-                    audio.play();
-
                     isEnter = false;
                 }
             }
@@ -102,12 +96,6 @@ class Page {
                         list.addTask(true, dateOfCreation, String(Number(dateOfCreation) + Number(document.getElementById("ta2").value) * 1000000), oldTAvalue);
                         list.visualisate(true);
                     }, 200);
-
-                    let
-                        audio = new Audio();
-
-                    audio.src = "C:/Users/Айнур/Desktop/todolist/js/sounds/Sound_08029.mp3";
-                    audio.play();
 
                     isShift = false;
                 }
