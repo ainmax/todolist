@@ -36,11 +36,35 @@ class List {
                     currentTask.DOMdata.taParent.prepend(currentTask.DOMdata.dragZone);
                     currentTask.DOMdata.parentParent.prepend(currentTask.positionData.dateIndicator);
 
+                    let
+                        editingTAcopy = document.createElement("div");
+
+                    editingTAcopy.id = "editingTAcopy";
+
+                    currentTask.DOMdata.ta.before(editingTAcopy);
+
+                    handler_editingTA({target: currentTask.DOMdata.ta});
+
+                    currentTask.DOMdata.ta.setAttribute("style", `height: ${currentTask.DOMdata.ta.style.height}`);
+                    currentTask.DOMdata.ta.parentNode.childNodes[1].remove();
+
                 } else if (!currentTask.positionData.newTimeProve) {
 
                     currentTask.positionData.finallyParent.append(currentTask.DOMdata.taParent);
                     currentTask.DOMdata.taParent.prepend(currentTask.DOMdata.ta);
                     currentTask.DOMdata.taParent.prepend(currentTask.DOMdata.dragZone);
+
+                    let
+                        editingTAcopy = document.createElement("div");
+
+                    editingTAcopy.id = "editingTAcopy";
+
+                    currentTask.DOMdata.ta.before(editingTAcopy);
+
+                    handler_editingTA({target: currentTask.DOMdata.ta});
+
+                    currentTask.DOMdata.ta.setAttribute("style", `height: ${currentTask.DOMdata.ta.style.height}`);
+                    currentTask.DOMdata.ta.parentNode.childNodes[1].remove();
 
                 } else {
 
@@ -49,6 +73,18 @@ class List {
                     currentTask.DOMdata.taParent.prepend(currentTask.DOMdata.ta);
                     currentTask.DOMdata.taParent.prepend(currentTask.DOMdata.dragZone);
                     currentTask.DOMdata.parentParent.prepend(currentTask.positionData.dateIndicator);
+
+                    let
+                        editingTAcopy = document.createElement("div");
+
+                    editingTAcopy.id = "editingTAcopy";
+
+                    currentTask.DOMdata.ta.before(editingTAcopy);
+
+                    handler_editingTA({target: currentTask.DOMdata.ta});
+
+                    currentTask.DOMdata.ta.setAttribute("style", `height: ${currentTask.DOMdata.ta.style.height}`);
+                    currentTask.DOMdata.ta.parentNode.childNodes[1].remove();
                 }
             }
 

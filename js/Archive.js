@@ -32,7 +32,7 @@ class Archive {
             block = document.createElement("div"),
             ikon = document.createElement("div");
 
-        block.innerHTML = value;
+        block.innerHTML = value.replace(/\n/g, "<br>") + "<br>";
         block.id = dateOfCreation;
         block.className = "archivedBlock";
 

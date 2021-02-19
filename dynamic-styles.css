@@ -30,3 +30,11 @@ div[ismoving]>textarea {
     cursor: text;
     background-color: rgb(213, 168, 255) !important;
 }
+
+#editingTAcopy {
+    position: absolute;
+    font-size: 0.8em;
+    font-family: Verdana;
+    margin-top: 1em;
+    opacity: 0;
+}

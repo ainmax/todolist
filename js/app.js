@@ -12,11 +12,11 @@ let
     dragShiftY;
 
 document.addEventListener("DOMContentLoaded", () => {
-    Page.load();
+    load();
 });
 
-class Page {
-    static load() {
+let
+    load = function() {
         if (System.getIt("planObject", false) != null) {
             let
                 list = new List(System.getIt("planObject", true));
@@ -43,10 +43,9 @@ class Page {
             System.setIt("archiveObject", {}, true);
         }
 
-        new Page()._addEventListeners();
-    }
-
-    _addEventListeners() {
+        addEventListeners();
+    },
+    addEventListeners = function() {
         document.ondragstart = function() {
             return false;
         };
@@ -125,4 +124,11 @@ class Page {
             newTAvalue = event.target.value;
         });
     }
-}
+
+//There are handlers for eventlisteners
+
+let
+    handler_editingTA = function(e) {
+        document.getElementById("editingTAcopy").innerHTML = e.target.value.replace(/\n/g, "<br>") + "<br>";
+        e.target.style.height = `${document.getElementById("editingTAcopy").offsetHeight}px`;
+    };

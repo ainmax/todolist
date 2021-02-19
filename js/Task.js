@@ -8,6 +8,8 @@ class Task {
         this.taskTerm = taskTerm;
     }
 
+    //There are two functions, beginDrag call then user begin dragging, endDrag call then user drop dragging task
+
     static beginDrag(event) {
         let
             elem = event.target;
@@ -128,15 +130,28 @@ class Task {
         }, 300);
     }
 
+    //There are two functions, beginRedact call then user begin to edit any task, endRedact call then user unfocus textarea which user edited
+
     static beginRedact(event) {
         let
             target = event.target;
 
         target.parentNode.firstChild.setAttribute("style", "display: none;");
 
-        target.setAttribute("style", "width: 100%; margin: 0; height: 100%; padding: 0; background-color: rgb(0, 0, 0, 0.1);");
+        target.setAttribute("style", `height: ${target.style.height}; width: 100%; margin: 0; padding: 0; background-color: rgb(0, 0, 0, 0.1);`);
         target.setAttribute("oldValue", `${target.value}`);
         target.removeAttribute('readonly');
+
+        let
+            editingTAcopy = document.createElement("div");
+
+        editingTAcopy.id = "editingTAcopy";
+
+        target.addEventListener("keydown", handler_editingTA);
+        target.addEventListener("keyup", handler_editingTA);
+        target.addEventListener("input", handler_editingTA);
+
+        target.before(editingTAcopy);
     }
 
     static endRedact(event) {
@@ -161,10 +176,16 @@ class Task {
 
         target.setAttribute("readonly", "readonly");
         target.removeAttribute("oldValue");
-        target.removeAttribute("style");
+        target.setAttribute("style", `height: ${target.style.height}`);
+        target.removeEventListener("keydown", handler_editingTA);
+        target.removeEventListener("keyup", handler_editingTA);
+        target.removeEventListener("input", handler_editingTA);
+        target.parentNode.childNodes[1].remove();
 
         target.parentNode.firstChild.removeAttribute("style");
     }
+
+    //There is one function, getDOMdata call from class 'List' then user or loader add task to list, this function return DOM components of task with eventListeners and styles on their
 
     getDOMdata() {
         const
@@ -204,6 +225,8 @@ class Task {
         };
     }
 
+    //There is one function, save push new task information to localStorage 
+
     save() {
         let
             list = new List(System.getIt("planObject", true));
@@ -213,6 +236,8 @@ class Task {
         localStorage.removeItem("planObject");
         System.setIt("planObject", list.convertToPrimitiveObj(), true);
     }
+
+    //There is one function, getPositionData call from class 'List' then user or loader add task to list, this function return information about position of task, with this information function from class 'List' add task to DOMlist
 
     getPositionData(isTaskFromUser, area) {
         let

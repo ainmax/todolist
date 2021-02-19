@@ -1,6 +1,7 @@
 .block {
     border: inherit;
     margin-left: 1%;
+    overflow: hidden;
     width: 85%;
     min-height: 2.5em;
     font-size: 0.8em;
@@ -29,12 +30,12 @@
 
 .archivedBlock {
     width: 68%;
-    height: 45px;
+    min-height: 45px;
     font-size: 16px;
     font-family: Verdana;
     display: block;
     float: left;
-    overflow-y: auto;
+    overflow-y: hidden;
     padding: 3px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -42,16 +43,15 @@
 
 .task {
     width: 70%;
-    display: block;
-    height: 2.7em;
+    display: table;
+    min-height: 2.7em;
     margin-bottom: 6px;
     transition: background-color 0.3s;
 }
 
 .archivedTask {
     width: 76.5%;
-    display: block;
-    height: 50px;
+    display: table;
     padding: 6px;
     margin-left: 12px;
     margin-right: 12px;
