@@ -30,8 +30,8 @@
 
 .archivedBlock {
     width: 68%;
-    min-height: 45px;
-    font-size: 16px;
+    min-height: 2.5em;
+    font-size: 0.8em;
     font-family: Verdana;
     display: block;
     float: left;
@@ -52,6 +52,7 @@
 .archivedTask {
     width: 76.5%;
     display: table;
+    min-height: 2.7em;
     padding: 6px;
     margin-left: 12px;
     margin-right: 12px;
@@ -114,7 +115,6 @@
 }
 
 #list {
-    text-align: center;
     display: block;
     width: 91%;
     margin-left: 3%;
