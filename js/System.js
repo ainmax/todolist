@@ -91,7 +91,7 @@ class System {
                 }
             }
         } else {
-            console.error("!In function sumDates error!", "date, days:", date, keys);
+            console.error("!In function sumDates error!", "date, days:", date, days);
         }
 
         days = String(days);

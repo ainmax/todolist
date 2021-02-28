@@ -76,7 +76,7 @@ let
                             list = new List(System.getIt("planObject", true)),
                             dateOfCreation = System.getDate();
 
-                        list.addTask(true, dateOfCreation, String(Number(dateOfCreation) + Number(document.getElementById("ta2").value) * 1000000), oldTAvalue);
+                        list.addTask(true, dateOfCreation, System.sumDates(String(System.getDate()), document.getElementById("ta2").value), oldTAvalue);
                         list.visualisate(true);
                     }, 200);
 
@@ -92,7 +92,7 @@ let
                             list = new List(System.getIt("planObject", true)),
                             dateOfCreation = System.getDate();
 
-                        list.addTask(true, dateOfCreation, String(Number(dateOfCreation) + Number(document.getElementById("ta2").value) * 1000000), oldTAvalue);
+                        list.addTask(true, dateOfCreation, System.sumDates(String(System.getDate()), document.getElementById("ta2").value), oldTAvalue);
                         list.visualisate(true);
                     }, 200);
 
