@@ -277,7 +277,7 @@ class Task {
         if (Number(timeOfPlan.substring(0, 8)) < Number(System.getDate().substring(0, 8))) {
             dateIndicator.className = "overdue";
         } else if (newTimeProve) {
-            dateIndicator.innerHTML = timeOfPlan.substring(0, 4) + "." + timeOfPlan.substring(4, 6) + "." + timeOfPlan.substring(6, 8);
+            dateIndicator.innerHTML = timeOfPlan.substring(6, 8) + ", " + System.getDayOfWeek(timeOfPlan);
             dateIndicator.className = "date_indicator";
         }
 

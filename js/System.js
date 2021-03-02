@@ -29,96 +29,42 @@ class System {
         return value;
     }
 
+    static getDayOfWeek(datein) {
+        let
+            date = new Date(Number(datein.substring(0, 4)), Number(datein.substring(4, 6)) - 1, Number(datein.substring(6, 8))),
+            weekDays = ["Sn", "Mn", "Ts", "Wd", "Th", "Fr", "St"];
+
+        return weekDays[date.getDay()];
+    }
+
     static sumDates(datein, days) {
         let
-            remainder = 0,
-            years = Number(datein.substring(0, 4)),
-            date = datein,
-            mounths = Number(datein.substring(4, 6));
+            date1 = new Date(Number(datein.substring(0, 4)), Number(datein.substring(4, 6)) - 1, Number(datein.substring(6, 8)), Number(datein.substring(8, 10)), Number(datein.substring(10, 12)), Number(datein.substring(12, 14))),
+            date2 = new Date(1000 * 3600 * 24 * Number(days)),
+            date = new Date(date1.getTime() + date2.getTime()),
+            value = "";
 
         let
-            days31 = [
-                "03",
-                "05",
-                "07",
-                "08",
-                "10",
-                "12"
-            ];
-
-        let
-            days30 = [
-                "01",
-                "04",
-                "06",
-                "09",
-                "11"
-            ];
-
-        let
-            days28 = [
-                "02"
-            ];
-
-        if (days31.includes(date.substring(4, 6))) {
-            days = Number(date.substring(6, 8)) + Number(days);
-
-            if (Math.floor(days / 31) == 1) {
-                remainder = days % 31;
-
-                if (Math.floor(days / 32) == 1) {
-                    days = remainder;
+            numLength = (valueFunc, a) => {
+                if (String(valueFunc + a).length <= 1) {
+                    value += "0";
                 }
+                value += String(valueFunc + a);
             }
-        } else if (days30.includes(date.substring(4, 6))) {
-            days = Number(date.substring(6, 8)) + Number(days);
 
-            if (Math.floor(days / 30) == 1) {
-                remainder = days % 30;
+        value += String(date.getFullYear());
 
-                if (Math.floor(days / 31) == 1) {
-                    days = remainder;
-                }
-            }
-        } else if (days28.includes(date.substring(4, 6))) {
-            days = Number(date.substring(6, 8)) + Number(days);
+        numLength(date.getMonth(), 1);
 
-            if (Math.floor(days / 28) == 1) {
-                remainder = days % 28;
+        numLength(date.getDate(), 0);
 
-                if (Math.floor(days / 29) == 1) {
-                    days = remainder;
-                }
-            }
-        } else {
-            console.error("!In function sumDates error!", "date, days:", date, days);
-        }
+        numLength(date.getHours(), 0);
 
-        days = String(days);
+        numLength(date.getMinutes(), 0);
 
-        if (days.length == 1) {
-            days = "0" + days;
-        }
+        numLength(date.getSeconds(), 0);
 
-
-        if (remainder != 0) {
-            mounths++;
-
-            if (mounths / 13 == 1) {
-                mounths = mounths % 12;
-                years++;
-            }
-        }
-
-        mounths = String(mounths);
-
-        if (mounths.length == 1) {
-            mounths = `0${mounths}`;
-        }
-
-        date = String(years) + mounths + String(days) + date.substring(9);
-
-        return date;
+        return value;
     }
 
     static getIt(key, jsonParse) {
