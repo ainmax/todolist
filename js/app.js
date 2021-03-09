@@ -165,6 +165,7 @@ let
                             localStorage.removeItem("planObject");
 
                             System.setIt("planObject", Object.assign(JSON.parse(text.substring(16)), planObject), true);
+                            location.reload();
                         }
                     })
                     .catch(err => {
