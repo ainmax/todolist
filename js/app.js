@@ -14,6 +14,9 @@ let
 let
     identityCode = "Ga6FhqofcNvmbjAp";
 
+let
+    isTAfocused = false;
+
 document.addEventListener("DOMContentLoaded", () => {
     load();
 });
@@ -46,7 +49,7 @@ let
             System.setIt("archiveObject", {}, true);
         }
 
-        document.getElementById("ta2").setAttribute("min", `${System.getDate().substring(0, 4)}-${System.getDate().substring(4, 6)}-${System.getDate().substring(6, 8)}`)
+        document.getElementById("ta2").setAttribute("min", `${System.getDate().substring(0, 4)}-${System.getDate().substring(4, 6)}-${System.getDate().substring(6, 8)}`);
 
         addEventListeners();
     },
@@ -84,7 +87,7 @@ let
                             dateOfCreation = System.getDate(),
                             date = document.getElementById("ta2").value.replace(/-/g, "");
 
-                        if(date == "") {
+                        if (date == "") {
                             date = dateOfCreation.substring(0, 8)
                         }
 
@@ -104,8 +107,6 @@ let
                             list = new List(System.getIt("planObject", true)),
                             dateOfCreation = System.getDate(),
                             date = document.getElementById("ta2").value.replace(/-W/g, "");
-
-                        
 
                         list.addTask(true, dateOfCreation, date + dateOfCreation.substring(8), oldTAvalue);
                         list.visualisate(true);
@@ -141,31 +142,36 @@ let
 
         //ctrl + c, ctrl + v
 
-        // document.addEventListener("keydown", (e) => {
-        //     if (e.ctrlKey && e.code == "KeyC") {
-        //         navigator.clipboard.writeText(identityCode + System.getIt("planObject"))
-        //             .then(() => {
+        document.addEventListener("keydown", (e) => {
+            if (e.ctrlKey && e.code == "KeyC" && !isTAfocused && !isTextareaFocused) {
+                navigator.clipboard.writeText(identityCode + System.getIt("planObject"))
+                    .then(() => {
 
-        //             })
-        //             .catch(err => {
-        //                 console.log('Something went wrong', err);
-        //             });
-        //     }
-        // });
+                    })
+                    .catch(err => {
+                        console.log('Something went wrong', err);
+                    });
+            }
+        });
 
-        // document.addEventListener("keydown", (e) => {
-        //     if (e.ctrlKey && e.code == "KeyV") {
-        //         navigator.clipboard.readText()
-        //             .then(text => {
-        //                 if (System.checkDataFormat(text)) {
-        //                     console.log("List inserted!");
-        //                 }
-        //             })
-        //             .catch(err => {
-        //                 console.log('Something went wrong', err);
-        //             });
-        //     }
-        // });
+        document.addEventListener("keydown", (e) => {
+            if (e.ctrlKey && e.code == "KeyV" && !isTAfocused && !isTextareaFocused) {
+                navigator.clipboard.readText()
+                    .then(text => {
+                        if (System.checkDataFormat(text)) {
+                            let
+                                planObject = System.getIt("planObject", true);
+
+                            localStorage.removeItem("planObject");
+
+                            System.setIt("planObject", Object.assign(JSON.parse(text.substring(16)), planObject), true);
+                        }
+                    })
+                    .catch(err => {
+                        console.log('Something went wrong', err);
+                    });
+            }
+        });
     }
 
 //There are handlers for eventlisteners

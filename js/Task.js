@@ -230,6 +230,14 @@ class Task {
             });
         });
 
+        ta.addEventListener("focus", () => {
+            isTAfocused = true;
+        });
+
+        ta.addEventListener("blur", () => {
+            isTAfocused = false;
+        });
+
         ta.setAttribute("readonly", "readonly");
         ta.setAttribute("wrap", "off");
 
@@ -268,7 +276,7 @@ class Task {
 
     //There is one function, getPositionData call from class 'List' then user or loader add task to list, this function return information about position of task, with this information function from class 'List' add task to DOMlist
 
-    getPositionData(isTaskFromUser, area) {
+    getPositionData(area) {
         let
             parentIsFirst = false,
             listDateArray = new Array(),
@@ -280,9 +288,6 @@ class Task {
             timeOfPlan = this.taskTerm,
             newTimeProve = true,
             dateIndicator = document.createElement("div");
-
-        let
-            planObject = area.convertToPrimitiveObj();
 
         for (let i = 0; i < list.childNodes.length; i++) {
             if (list.childNodes[i].className == "listChild") {
