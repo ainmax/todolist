@@ -1,4 +1,4 @@
-console.log("You can write this code Auhip!");
+console.log("You can write this code Ainur!");
 
 class System {
     static getDate() {
@@ -96,13 +96,21 @@ class System {
         localStorage.removeItem("archiveObject");
     }
 
-    static get(object, key) {
-        for (let k in object) {
-            if (k.substring(0, key.length) == key) {
-                return object[k];
-            }
+    static checkDataFormat(data) {
+        if (data.substring(0, 16) == identityCode) {
+            return true;
         }
 
         return false;
     }
+
+    // static get(object, key) {
+    //     for (let k in object) {
+    //         if (k.substring(0, key.length) == key) {
+    //             return object[k];
+    //         }
+    //     }
+
+    //     return false;
+    // }
 }

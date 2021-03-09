@@ -88,6 +88,7 @@ class Task {
 
                     dragShiftX = undefined;
                     dragShiftY = undefined;
+
                     let
                         planObject = System.getIt("planObject", true);
 
@@ -102,7 +103,7 @@ class Task {
                     } else if (currentArea.className == "task") {
                         currentArea.after(target);
                     } else {
-                        currentArea.firstChild.after(target);
+                        currentArea.append(target);
                     }
                 } else {
                     document.querySelector("[isMoving]").style.display = "block";
@@ -115,7 +116,12 @@ class Task {
             target.removeAttribute("isMoving");
         }
 
-        event.target.removeEventListener("mousemove", Task.beginDrag, { capture: false, once: true, passive: false });
+        event.target.removeEventListener("mousemove", Task.beginDrag, {
+            capture: false,
+            once: true,
+            passive: false
+        });
+
         document.getElementById("archive").removeAttribute("style");
         document.getElementById("delete_zone").style = "display: block; opacity: 0;";
 
@@ -152,6 +158,12 @@ class Task {
         target.addEventListener("input", handler_editingTA);
 
         target.before(editingTAcopy);
+
+        target.addEventListener("blur", Task.endRedact, {
+            capture: false,
+            once: true,
+            passive: false
+        });
     }
 
     static endRedact(event) {
@@ -183,6 +195,11 @@ class Task {
         target.parentNode.childNodes[1].remove();
 
         target.parentNode.firstChild.removeAttribute("style");
+        target.addEventListener("click", Task.beginRedact, {
+            capture: false,
+            once: true,
+            passive: false
+        });
     }
 
     //There is one function, getDOMdata call from class 'List' then user or loader add task to list, this function return DOM components of task with eventListeners and styles on their
@@ -194,15 +211,27 @@ class Task {
             ta = document.createElement("textarea"),
             dragZone = document.createElement("div");
 
-        ta.addEventListener("click", Task.beginRedact);
-        ta.addEventListener("blur", Task.endRedact);
+        ta.addEventListener("click", Task.beginRedact, {
+            capture: false,
+            once: true,
+            passive: false
+        });
 
         dragZone.addEventListener("mousedown", (event) => {
-            event.target.addEventListener("mousemove", Task.beginDrag, { capture: false, once: true, passive: false });
-            document.addEventListener("mouseup", Task.endDrag, { capture: false, once: true, passive: false });
+            event.target.addEventListener("mousemove", Task.beginDrag, {
+                capture: false,
+                once: true,
+                passive: false
+            });
+            document.addEventListener("mouseup", Task.endDrag, {
+                capture: false,
+                once: true,
+                passive: false
+            });
         });
 
         ta.setAttribute("readonly", "readonly");
+        ta.setAttribute("wrap", "off");
 
         ta.id = this.dateOfCreation;
         taParent.id = "p" + this.dateOfCreation;

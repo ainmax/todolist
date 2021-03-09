@@ -43,7 +43,9 @@ class List {
 
                     currentTask.DOMdata.ta.before(editingTAcopy);
 
-                    handler_editingTA({target: currentTask.DOMdata.ta});
+                    handler_editingTA({
+                        target: currentTask.DOMdata.ta
+                    });
 
                     currentTask.DOMdata.ta.setAttribute("style", `height: ${currentTask.DOMdata.ta.style.height}`);
                     currentTask.DOMdata.ta.parentNode.childNodes[1].remove();
@@ -61,7 +63,9 @@ class List {
 
                     currentTask.DOMdata.ta.before(editingTAcopy);
 
-                    handler_editingTA({target: currentTask.DOMdata.ta});
+                    handler_editingTA({
+                        target: currentTask.DOMdata.ta
+                    });
 
                     currentTask.DOMdata.ta.setAttribute("style", `height: ${currentTask.DOMdata.ta.style.height}`);
                     currentTask.DOMdata.ta.parentNode.childNodes[1].remove();
@@ -81,7 +85,9 @@ class List {
 
                     currentTask.DOMdata.ta.before(editingTAcopy);
 
-                    handler_editingTA({target: currentTask.DOMdata.ta});
+                    handler_editingTA({
+                        target: currentTask.DOMdata.ta
+                    });
 
                     currentTask.DOMdata.ta.setAttribute("style", `height: ${currentTask.DOMdata.ta.style.height}`);
                     currentTask.DOMdata.ta.parentNode.childNodes[1].remove();

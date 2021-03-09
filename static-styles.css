@@ -1,10 +1,10 @@
 .block {
     border: inherit;
     margin-left: 1%;
-    overflow-y: hidden;
     width: 85%;
-    min-height: 2.5em;
+    min-height: 1.7em;
     font-size: 0.8em;
+    overflow-y: hidden;
     font-family: Verdana;
     display: block;
     float: left;
@@ -16,7 +16,7 @@
 }
 
 .dragZone {
-    height: 2.7em;
+    height: 1.8em;
     width: 1.5em;
     margin-left: 1%;
     display: block;
@@ -30,7 +30,7 @@
 
 .archivedBlock {
     width: 68%;
-    min-height: 2.5em;
+    min-height: 1.7em;
     font-size: 0.8em;
     font-family: Verdana;
     display: block;
@@ -44,22 +44,22 @@
 .task {
     width: 70%;
     display: table;
-    min-height: 2.7em;
+    min-height: 1.8em;
     transition: background-color 0.3s;
 }
 
 .archivedTask {
     width: 76.5%;
     display: table;
-    min-height: 2.7em;
-    padding: 6px;
+    min-height: 1.8em;
+    padding: 0 6px;
     margin-left: 12px;
     margin-right: 12px;
 }
 
 .complete_ikon {
     background-image: url("images/inversed-complete-ikon.jpg");
-    height: 1.2em;
+    height: 1.8em;
     width: 1.6em;
     margin-top: 0.3em;
     margin-left: 1%;

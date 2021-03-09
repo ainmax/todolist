@@ -38,7 +38,7 @@ class Archive {
 
         ikon.className = "complete_ikon";
 
-        archivedTask.addEventListener("mousedown", function(event) {
+        archivedTask.addEventListener("click", function(event) {
             let
                 planObject = System.getIt("planObject", true),
                 archiveObject = System.getIt("archiveObject", true);

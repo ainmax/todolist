@@ -11,6 +11,9 @@ let
     dragShiftX,
     dragShiftY;
 
+let
+    identityCode = "Ga6FhqofcNvmbjAp";
+
 document.addEventListener("DOMContentLoaded", () => {
     load();
 });
@@ -65,7 +68,9 @@ let
             }
         });
 
-        document.onselectstart = () => { return false; }
+        document.onselectstart = () => {
+            return false;
+        }
 
         document.addEventListener("keydown", (event) => {
             if (event.key == "Enter") {
@@ -122,6 +127,34 @@ let
         document.querySelector("#textarea").addEventListener("input", (event) => {
             oldTAvalue = newTAvalue;
             newTAvalue = event.target.value;
+        });
+
+        //ctrl + c, ctrl + v
+
+        document.addEventListener("keydown", (e) => {
+            if (e.ctrlKey && e.code == "KeyC") {
+                navigator.clipboard.writeText(identityCode + System.getIt("planObject"))
+                    .then(() => {
+
+                    })
+                    .catch(err => {
+                        console.log('Something went wrong', err);
+                    });
+            }
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.ctrlKey && e.code == "KeyV") {
+                navigator.clipboard.readText()
+                    .then(text => {
+                        if (System.checkDataFormat(text)) {
+                            console.log("List inserted!");
+                        }
+                    })
+                    .catch(err => {
+                        console.log('Something went wrong', err);
+                    });
+            }
         });
     }
 
