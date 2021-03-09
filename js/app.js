@@ -46,6 +46,8 @@ let
             System.setIt("archiveObject", {}, true);
         }
 
+        document.getElementById("ta2").setAttribute("min", `${System.getDate().substring(0, 4)}-${System.getDate().substring(4, 6)}-${System.getDate().substring(6, 8)}`)
+
         addEventListeners();
     },
     addEventListeners = function() {
@@ -79,9 +81,14 @@ let
                     setTimeout(() => {
                         let
                             list = new List(System.getIt("planObject", true)),
-                            dateOfCreation = System.getDate();
+                            dateOfCreation = System.getDate(),
+                            date = document.getElementById("ta2").value.replace(/-/g, "");
 
-                        list.addTask(true, dateOfCreation, System.sumDates(String(System.getDate()), document.getElementById("ta2").value), oldTAvalue);
+                        if(date == "") {
+                            date = dateOfCreation.substring(0, 8)
+                        }
+
+                        list.addTask(true, dateOfCreation, date + dateOfCreation.substring(8), oldTAvalue);
                         list.visualisate(true);
                     }, 200);
 
@@ -95,9 +102,12 @@ let
                     setTimeout(() => {
                         let
                             list = new List(System.getIt("planObject", true)),
-                            dateOfCreation = System.getDate();
+                            dateOfCreation = System.getDate(),
+                            date = document.getElementById("ta2").value.replace(/-W/g, "");
 
-                        list.addTask(true, dateOfCreation, System.sumDates(String(System.getDate()), document.getElementById("ta2").value), oldTAvalue);
+                        
+
+                        list.addTask(true, dateOfCreation, date + dateOfCreation.substring(8), oldTAvalue);
                         list.visualisate(true);
                     }, 200);
 

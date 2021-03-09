@@ -277,18 +277,12 @@ class Task {
 
         let
             best = "0",
-            timeOfPlan,
+            timeOfPlan = this.taskTerm,
             newTimeProve = true,
             dateIndicator = document.createElement("div");
 
         let
             planObject = area.convertToPrimitiveObj();
-
-        if (isTaskFromUser) {
-            timeOfPlan = System.sumDates(String(this.dateOfCreation), document.getElementById("ta2").value);
-        } else {
-            timeOfPlan = planObject[Number(this.dateOfCreation)][1];
-        }
 
         for (let i = 0; i < list.childNodes.length; i++) {
             if (list.childNodes[i].className == "listChild") {

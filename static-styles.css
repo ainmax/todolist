@@ -61,7 +61,6 @@
     background-image: url("images/inversed-complete-ikon.jpg");
     height: 1.8em;
     width: 1.6em;
-    margin-top: 0.3em;
     margin-left: 1%;
     display: block;
     float: left;
@@ -170,4 +169,5 @@ body {
     font-size: 18px;
     background-color: rgb(255, 255, 255);
     outline: none;
+    border: hidden;
 }
