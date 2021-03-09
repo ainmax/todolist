@@ -131,31 +131,31 @@ let
 
         //ctrl + c, ctrl + v
 
-        document.addEventListener("keydown", (e) => {
-            if (e.ctrlKey && e.code == "KeyC") {
-                navigator.clipboard.writeText(identityCode + System.getIt("planObject"))
-                    .then(() => {
+        // document.addEventListener("keydown", (e) => {
+        //     if (e.ctrlKey && e.code == "KeyC") {
+        //         navigator.clipboard.writeText(identityCode + System.getIt("planObject"))
+        //             .then(() => {
 
-                    })
-                    .catch(err => {
-                        console.log('Something went wrong', err);
-                    });
-            }
-        });
+        //             })
+        //             .catch(err => {
+        //                 console.log('Something went wrong', err);
+        //             });
+        //     }
+        // });
 
-        document.addEventListener("keydown", (e) => {
-            if (e.ctrlKey && e.code == "KeyV") {
-                navigator.clipboard.readText()
-                    .then(text => {
-                        if (System.checkDataFormat(text)) {
-                            console.log("List inserted!");
-                        }
-                    })
-                    .catch(err => {
-                        console.log('Something went wrong', err);
-                    });
-            }
-        });
+        // document.addEventListener("keydown", (e) => {
+        //     if (e.ctrlKey && e.code == "KeyV") {
+        //         navigator.clipboard.readText()
+        //             .then(text => {
+        //                 if (System.checkDataFormat(text)) {
+        //                     console.log("List inserted!");
+        //                 }
+        //             })
+        //             .catch(err => {
+        //                 console.log('Something went wrong', err);
+        //             });
+        //     }
+        // });
     }
 
 //There are handlers for eventlisteners
