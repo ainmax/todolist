@@ -50,6 +50,7 @@ let
         }
 
         document.getElementById("ta2").setAttribute("min", `${System.getDate().substring(0, 4)}-${System.getDate().substring(4, 6)}-${System.getDate().substring(6, 8)}`);
+        document.getElementById("ta2").setAttribute("value", `${System.getDate().substring(0, 4)}-${System.getDate().substring(4, 6)}-${System.getDate().substring(6, 8)}`);
 
         addEventListeners();
     },

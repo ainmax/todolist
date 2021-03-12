@@ -228,6 +228,25 @@ class Task {
             });
         });
 
+        dragZone.addEventListener("dblclick", (e) => {
+            let
+                planObject = System.getIt("planObject", true),
+                archiveObject = System.getIt("archiveObject", true);
+
+            let
+                list = new List(planObject),
+                archive = new Archive(archiveObject);
+
+            let
+                id = e.target.parentNode.lastChild.id,
+                value = e.target.parentNode.lastChild.value;
+
+            list.deleteTask(e.target.parentNode.lastChild.id);
+            archive.setTask(value, id, planObject[id][1]);
+
+            list.visualisate(false);
+        });
+
         ta.addEventListener("focus", () => {
             isTAfocused = true;
         });
