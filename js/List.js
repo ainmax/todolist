@@ -26,7 +26,7 @@ class List {
 
             if (isTaskNew) {
                 currentTask.DOMdata = currentTask.getDOMdata();
-                currentTask.positionData = currentTask.getPositionData(isTasksFromUser, new List(this.convertToPrimitiveObj()));
+                currentTask.positionData = currentTask.getPositionData(new List(this.convertToPrimitiveObj()));
 
                 if (currentTask.positionData.newTimeProve && !currentTask.positionData.parentIsFirst) {
 

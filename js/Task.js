@@ -142,9 +142,7 @@ class Task {
         let
             target = event.target;
 
-        target.parentNode.firstChild.setAttribute("style", "display: none;");
-
-        target.setAttribute("style", `height: ${target.style.height}; width: 100%; margin: 0; padding: 0; background-color: rgb(0, 0, 0, 0.1);`);
+        target.setAttribute("style", `height: ${target.style.height}; background-color: rgb(0, 0, 0, 0.1);`);
         target.setAttribute("oldValue", `${target.value}`);
         target.removeAttribute('readonly');
 
