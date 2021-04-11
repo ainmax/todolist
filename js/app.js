@@ -177,6 +177,20 @@ let
                     });
             }
         });
+
+        //fast change date (alt + arrow)
+        
+        document.addEventListener("keydown", (e) => {
+            if(e.altKey && e.code == "ArrowRight" && isTextareaFocused) {
+                document.getElementById("ta2").stepUp();
+            }
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if(e.altKey && e.code == "ArrowLeft" && isTextareaFocused) {
+                document.getElementById("ta2").stepDown();
+            }
+        }) 
     }
 
 //There are handlers for eventlisteners
