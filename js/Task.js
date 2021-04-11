@@ -322,7 +322,12 @@ class Task {
         if (Number(timeOfPlan.substring(0, 8)) < Number(System.getDate().substring(0, 8))) {
             dateIndicator.className = "overdue";
         } else if (newTimeProve) {
-            dateIndicator.innerHTML = timeOfPlan.substring(6, 8) + ", " + System.getDayOfWeek(timeOfPlan);
+            if(timeOfPlan.substring(0, 6) == System.getDate().substring(0, 6)) {
+                dateIndicator.innerHTML = timeOfPlan.substring(6, 8) + ", " + System.getDayOfWeek(timeOfPlan);
+            } else {
+                dateIndicator.innerHTML = {"01": "January", "02": "February", "03": "March", "04": "April", "05": "May", "06": "June", "07": "July", "08": "August", "09": "September", "10": "October", "11": "November", "12": "December"}[timeOfPlan.substring(4, 6)] + " " + timeOfPlan.substring(6, 8) + ", " + System.getDayOfWeek(timeOfPlan);
+            }
+
             dateIndicator.className = "date_indicator";
         }
 
