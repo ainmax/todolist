@@ -145,7 +145,7 @@ let
 
         document.addEventListener("keydown", (e) => {
             if (e.ctrlKey && e.code == "KeyC" && !isTAfocused && !isTextareaFocused) {
-                navigator.clipboard.writeText(identityCode + System.getIt("planObject"))
+                navigator.clipboard.writeText(identityCode + System.getIt("planObject") + identityCode + System.getIt("archiveObject"))
                     .then(() => {
 
                     })
@@ -161,11 +161,14 @@ let
                     .then(text => {
                         if (System.checkDataFormat(text)) {
                             let
-                                planObject = System.getIt("planObject", true);
+                                planObject = System.getIt("planObject", true),
+                                archiveObject = System.getIt("archiveObject", true);
 
                             localStorage.removeItem("planObject");
+                            localStorage.removeItem("archiveObject");
 
-                            System.setIt("planObject", Object.assign(JSON.parse(text.substring(16)), planObject), true);
+                            System.setIt("planObject", Object.assign(JSON.parse(text.substring(16).split(identityCode)[0]), planObject), true);
+                            System.setIt("archiveObject", Object.assign(JSON.parse(text.substring(16).split(identityCode)[1]), archiveObject), true);
                             location.reload();
                         }
                     })
