@@ -39,6 +39,8 @@ class List {
                     let
                         editingTAcopy = document.createElement("div");
 
+                    editingTAcopy.style.width = `${currentTask.DOMdata.ta.clientWidth - 1}px`;
+
                     editingTAcopy.id = "editingTAcopy";
 
                     currentTask.DOMdata.ta.before(editingTAcopy);
@@ -58,6 +60,8 @@ class List {
 
                     let
                         editingTAcopy = document.createElement("div");
+
+                    editingTAcopy.style.width = `${currentTask.DOMdata.ta.clientWidth - 1}px`;
 
                     editingTAcopy.id = "editingTAcopy";
 
@@ -80,6 +84,8 @@ class List {
 
                     let
                         editingTAcopy = document.createElement("div");
+
+                    editingTAcopy.style.width = `${currentTask.DOMdata.ta.clientWidth - 1}px`;
 
                     editingTAcopy.id = "editingTAcopy";
 

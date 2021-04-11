@@ -35,7 +35,7 @@ div[ismoving]>textarea {
     position: absolute;
     font-size: 0.8em;
     font-family: Verdana;
-    opacity: 0;
-    overflow-x: scroll;
+    opacity: 1;
+    word-wrap: break-word;
     z-index: -1;
 }

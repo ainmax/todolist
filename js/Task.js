@@ -155,6 +155,8 @@ class Task {
         target.addEventListener("keyup", handler_editingTA);
         target.addEventListener("input", handler_editingTA);
 
+        editingTAcopy.style.width = `${target.clientWidth - 1}px`;
+
         target.before(editingTAcopy);
 
         target.addEventListener("blur", Task.endRedact, {
@@ -256,7 +258,7 @@ class Task {
         });
 
         ta.setAttribute("readonly", "readonly");
-        ta.setAttribute("wrap", "off");
+        ta.setAttribute("wrap", "soft");
 
         ta.id = this.dateOfCreation;
         taParent.id = "p" + this.dateOfCreation;
