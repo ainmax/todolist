@@ -136,7 +136,7 @@ class List {
         if (isTasksFromUser) {
             setTimeout(() => {
                 document.getElementById("textarea").value = null;
-                document.getElementById("ta2").value = null;
+                document.getElementById("ta2").value = `${System.getDate().substring(0, 4)}-${System.getDate().substring(4, 6)}-${System.getDate().substring(6, 8)}`;
             }, 10);
         }
     }

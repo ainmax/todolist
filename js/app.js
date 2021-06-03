@@ -141,6 +141,12 @@ let
             newTAvalue = event.target.value;
         });
 
+        document.addEventListener("keypress", (e) => {
+            if (!isTAfocused && !isTextareaFocused) {
+                document.getElementById("textarea").focus();
+            }
+        });
+
         //ctrl + c, ctrl + v
 
         document.addEventListener("keydown", (e) => {
@@ -179,18 +185,18 @@ let
         });
 
         //fast change date (alt + arrow)
-        
+
         document.addEventListener("keydown", (e) => {
-            if(e.altKey && e.code == "ArrowRight" && isTextareaFocused) {
+            if (e.altKey && e.code == "ArrowUp" && isTextareaFocused) {
                 document.getElementById("ta2").stepUp();
             }
         });
 
         document.addEventListener("keydown", (e) => {
-            if(e.altKey && e.code == "ArrowLeft" && isTextareaFocused) {
+            if (e.altKey && e.code == "ArrowDown" && isTextareaFocused) {
                 document.getElementById("ta2").stepDown();
             }
-        }) 
+        })
     }
 
 //There are handlers for eventlisteners

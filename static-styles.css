@@ -160,9 +160,8 @@ body {
 }
 
 #ta2 {
-    width: 20%;
-    position: fixed;
     right: 3%;
+    position: fixed;
     bottom: 1%;
     height: 12%;
     resize: none;
