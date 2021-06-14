@@ -1,8 +1,8 @@
 .block {
     border: inherit;
     margin-left: 1%;
-    width: 85%;
-    min-height: 1.7em;
+    width: calc(95% - 1.5em + 2px);
+    min-height: calc(1.8em + 2px);
     font-size: 0.8em;
     overflow-y: hidden;
     font-family: Verdana;
