@@ -1,11 +1,14 @@
 class Task {
     DOMdata;
     positionData;
+    index;
+    taskTerm;
 
-    constructor(value, dateOfCreation, taskTerm) {
+    constructor(value, dateOfCreation, taskTerm, index) {
         this.value = value;
         this.dateOfCreation = dateOfCreation;
         this.taskTerm = taskTerm;
+        this.index = index;
     }
 
     //There are two functions, beginDrag call then user begin dragging, endDrag call then user drop dragging task
@@ -59,7 +62,7 @@ class Task {
                 let
                     currentArea = document.elementFromPoint(event.clientX, event.clientY);
 
-                if (currentArea.parentNode.className == "task" || currentArea.className == "task" || (currentArea.className == "listChild" && currentArea.firstChild.innerHTML == "Today" && currentArea.childNodes.length == 1)) {
+                if (currentArea.parentNode.className == "task" || currentArea.className == "task" || (currentArea.className == "listChild" && currentArea.firstChild.innerHTML == "Today" && currentArea.childNodes.length == 1) || currentArea.className == "listChild") {
                     let
                         droppedTaskData;
 
@@ -67,44 +70,41 @@ class Task {
                         droppedTaskData = {
                             value: target.lastChild.value,
                             dateOfCreation: target.id.substring(1),
-                            tasksTerm: currentArea.parentNode.parentNode.getAttribute("tasksterm").substring(0, 8) + System.getIt("planObject", true)[target.id.substring(1)][1].substring(8)
+                            taskTerm: currentArea.parentNode.parentNode.getAttribute("tasksterm").substring(0, 8) + System.getIt("planObject", true)[target.id.substring(1)][1].substring(8),
+                            index: Number(currentArea.parentNode.getAttribute("index"))
                         };
                     } else if (currentArea.className == "task") {
                         droppedTaskData = {
                             value: target.lastChild.value,
                             dateOfCreation: target.id.substring(1),
-                            tasksTerm: currentArea.parentNode.getAttribute("tasksterm").substring(0, 8) + System.getIt("planObject", true)[target.id.substring(1)][1].substring(8)
+                            taskTerm: currentArea.parentNode.getAttribute("tasksterm").substring(0, 8) + System.getIt("planObject", true)[target.id.substring(1)][1].substring(8),
+                            index: Number(currentArea.getAttribute("index"))
+                        };
+                    } else if (currentArea.className == "listChild" && currentArea.firstChild.innerHTML == "Today" && currentArea.childNodes.length == 1) {
+                        droppedTaskData = {
+                            value: target.lastChild.value,
+                            dateOfCreation: target.id.substring(1),
+                            taskTerm: currentArea.getAttribute("tasksterm").substring(0, 8) + System.getIt("planObject", true)[target.id.substring(1)][1].substring(8),
+                            index: 0
                         };
                     } else {
                         droppedTaskData = {
                             value: target.lastChild.value,
                             dateOfCreation: target.id.substring(1),
-                            tasksTerm: currentArea.getAttribute("tasksterm").substring(0, 8) + System.getIt("planObject", true)[target.id.substring(1)][1].substring(8)
+                            taskTerm: currentArea.getAttribute("tasksterm").substring(0, 8) + System.getIt("planObject", true)[target.id.substring(1)][1].substring(8),
+                            index: null
                         };
                     }
 
+                    currentArea.className == "listChild"
                     list.deleteTask(target.id.substring(1));
                     list.visualisate(false);
 
                     dragShiftX = undefined;
                     dragShiftY = undefined;
 
-                    let
-                        planObject = System.getIt("planObject", true);
-
-                    localStorage.removeItem("planObject");
-
-                    planObject[droppedTaskData.dateOfCreation] = [droppedTaskData.value, droppedTaskData.tasksTerm, droppedTaskData.dateOfCreation];
-
-                    System.setIt("planObject", planObject, true);
-
-                    if (currentArea.parentNode.className == "task") {
-                        currentArea.parentNode.after(target);
-                    } else if (currentArea.className == "task") {
-                        currentArea.after(target);
-                    } else {
-                        currentArea.append(target);
-                    }
+                    list.addTask(true, droppedTaskData.dateOfCreation, droppedTaskData.taskTerm, droppedTaskData.value, droppedTaskData.index);
+                    list.visualisate(false);
                 } else {
                     document.querySelector("[isMoving]").style.display = "block";
                 }
@@ -287,7 +287,7 @@ class Task {
         let
             list = new List(System.getIt("planObject", true));
 
-        list.listOfTasks[this.dateOfCreation] = new Task(this.value, this.dateOfCreation, this.taskTerm);
+        list.listOfTasks[this.dateOfCreation] = new Task(this.value, this.dateOfCreation, this.taskTerm, this.index);
 
         localStorage.removeItem("planObject");
         System.setIt("planObject", list.convertToPrimitiveObj(), true);
@@ -297,13 +297,11 @@ class Task {
 
     getPositionData(area) {
         let
-            parentIsFirst = false,
             listDateArray = new Array(),
             finallyParent,
             list = document.getElementById("list");
 
         let
-            best = "0",
             timeOfPlan = this.taskTerm,
             newTimeProve = true,
             dateIndicator = document.createElement("div");
@@ -324,21 +322,24 @@ class Task {
         if (Number(timeOfPlan.substring(0, 8)) < Number(System.getDate().substring(0, 8))) {
             dateIndicator.className = "overdue";
         } else if (newTimeProve) {
-            if(timeOfPlan.substring(0, 6) == System.getDate().substring(0, 6)) {
+            if (timeOfPlan.substring(0, 6) == System.getDate().substring(0, 6)) {
                 dateIndicator.innerHTML = timeOfPlan.substring(6, 8) + ", " + System.getDayOfWeek(timeOfPlan);
             } else {
-                dateIndicator.innerHTML = {"01": "January", "02": "February", "03": "March", "04": "April", "05": "May", "06": "June", "07": "July", "08": "August", "09": "September", "10": "October", "11": "November", "12": "December"}[timeOfPlan.substring(4, 6)] + " " + timeOfPlan.substring(6, 8) + ", " + System.getDayOfWeek(timeOfPlan);
+                dateIndicator.innerHTML = { "01": "January", "02": "February", "03": "March", "04": "April", "05": "May", "06": "June", "07": "July", "08": "August", "09": "September", "10": "October", "11": "November", "12": "December" }[timeOfPlan.substring(4, 6)] + " " + timeOfPlan.substring(6, 8) + ", " + System.getDayOfWeek(timeOfPlan);
             }
 
             dateIndicator.className = "date_indicator";
         }
 
         if (newTimeProve) {
+            let
+                best = "0";
+
             for (let i = 0; i < listDateArray.length; i++) {
                 let
                     key = document.getElementById("dt" + listDateArray[i]).getAttribute("tasksterm");
 
-                if (Number(key.substring(0, 8)) > Number(best.substring(0, 8)) && Number(key.substring(0, 8)) <= Number(timeOfPlan.substring(0, 8))) {
+                if (Number(key.substring(0, 8)) > Number(best.substring(0, 8)) && Number(key.substring(0, 8)) < Number(timeOfPlan.substring(0, 8))) {
                     best = key;
                 }
             }
@@ -360,14 +361,83 @@ class Task {
         }
 
         if (finallyParent == null) {
-            parentIsFirst = true;
+            finallyParent = list.firstChild;
         }
+
+        let
+            taskIsFirst = false,
+            finallyTask,
+            myIndex = this.index,
+            tasksList = new Array(),
+            isIndexNew = true;
+
+        for (let i = 1; i < finallyParent.childNodes.length; i++) {
+            tasksList[i - 1] = finallyParent.childNodes[i];
+        }
+
+        if (myIndex != null) {
+            for (let elem of tasksList) {
+                if (elem.getAttribute("index") == String(myIndex)) {
+                    isIndexNew = false;
+                }
+            }
+
+            if (isIndexNew) {
+                let
+                    bestIndex = -1,
+                    bestTaskNumber;
+
+                for (let i = 0; i < tasksList.length; i++) {
+                    let
+                        currentIndex = tasksList[i].getAttribute("index");
+
+                    if (currentIndex > bestIndex && currentIndex < myIndex) {
+                        bestIndex = currentIndex;
+                        bestTaskNumber = i;
+                    }
+                }
+
+                if (bestIndex != -1) {
+                    finallyTask = tasksList[bestTaskNumber];
+                } else {
+                    taskIsFirst = true;
+                }
+            } else {
+                let
+                    targetTaskNumber;
+
+                for (let i = 0; i < tasksList.length; i++) {
+                    if (tasksList[i].getAttribute("index") == String(myIndex)) {
+                        targetTaskNumber = i;
+                    }
+                }
+
+                if (targetTaskNumber != 0) {
+                    finallyTask = tasksList[targetTaskNumber - 1];
+                } else {
+                    taskIsFirst = true;
+                }
+            }
+        } else {
+            if (finallyParent.childNodes.length != 1) {
+                finallyTask = finallyParent.lastChild;
+                myIndex = Number(finallyParent.lastChild.getAttribute("index")) + 1;
+            } else {
+                taskIsFirst = true;
+                myIndex = 0;
+            }
+        }
+
+        this.index = myIndex;
 
         return {
             "finallyParent": finallyParent,
-            "parentIsFirst": parentIsFirst,
             "newTimeProve": newTimeProve,
-            "dateIndicator": dateIndicator
+            "dateIndicator": dateIndicator,
+            "finallyTask": finallyTask,
+            "taskIsFirst": taskIsFirst,
+            "index": myIndex,
+            "isIndexNew": isIndexNew
         }
     }
 }

@@ -15,7 +15,7 @@ class List {
             currentTask;
 
         for (let key in this.listOfTasks) {
-            currentTask = new Task(this.listOfTasks[key].value, this.listOfTasks[key].dateOfCreation, this.listOfTasks[key].taskTerm);
+            currentTask = new Task(this.listOfTasks[key].value, this.listOfTasks[key].dateOfCreation, this.listOfTasks[key].taskTerm, this.listOfTasks[key].index);
 
             for (let block of allTasks) {
                 if (currentTask.dateOfCreation == block.id.substring(1)) {
@@ -28,76 +28,48 @@ class List {
                 currentTask.DOMdata = currentTask.getDOMdata();
                 currentTask.positionData = currentTask.getPositionData(new List(this.convertToPrimitiveObj()));
 
-                if (currentTask.positionData.newTimeProve && !currentTask.positionData.parentIsFirst) {
-
+                if (currentTask.positionData.newTimeProve) {
                     currentTask.positionData.finallyParent.after(currentTask.DOMdata.parentParent);
                     currentTask.DOMdata.parentParent.prepend(currentTask.DOMdata.taParent);
                     currentTask.DOMdata.taParent.prepend(currentTask.DOMdata.ta);
                     currentTask.DOMdata.taParent.prepend(currentTask.DOMdata.dragZone);
                     currentTask.DOMdata.parentParent.prepend(currentTask.positionData.dateIndicator);
 
-                    let
-                        editingTAcopy = document.createElement("div");
 
-                    editingTAcopy.style.width = `${currentTask.DOMdata.ta.clientWidth - 1}px`;
-
-                    editingTAcopy.id = "editingTAcopy";
-
-                    currentTask.DOMdata.ta.before(editingTAcopy);
-
-                    handler_editingTA({
-                        target: currentTask.DOMdata.ta
-                    });
-
-                    currentTask.DOMdata.ta.setAttribute("style", `height: ${currentTask.DOMdata.ta.style.height}`);
-                    currentTask.DOMdata.ta.parentNode.childNodes[1].remove();
-
-                } else if (!currentTask.positionData.newTimeProve) {
-
-                    currentTask.positionData.finallyParent.append(currentTask.DOMdata.taParent);
-                    currentTask.DOMdata.taParent.prepend(currentTask.DOMdata.ta);
-                    currentTask.DOMdata.taParent.prepend(currentTask.DOMdata.dragZone);
-
-                    let
-                        editingTAcopy = document.createElement("div");
-
-                    editingTAcopy.style.width = `${currentTask.DOMdata.ta.clientWidth - 1}px`;
-
-                    editingTAcopy.id = "editingTAcopy";
-
-                    currentTask.DOMdata.ta.before(editingTAcopy);
-
-                    handler_editingTA({
-                        target: currentTask.DOMdata.ta
-                    });
-
-                    currentTask.DOMdata.ta.setAttribute("style", `height: ${currentTask.DOMdata.ta.style.height}`);
-                    currentTask.DOMdata.ta.parentNode.childNodes[1].remove();
+                    currentTask.DOMdata.taParent.setAttribute("index", `${currentTask.positionData.index}`);
 
                 } else {
+                    if (currentTask.positionData.taskIsFirst) {
+                        currentTask.positionData.finallyParent.firstChild.after(currentTask.DOMdata.taParent);
+                    } else {
+                        currentTask.positionData.finallyTask.after(currentTask.DOMdata.taParent);
+                    }
 
-                    list.prepend(currentTask.DOMdata.parentParent);
-                    currentTask.DOMdata.parentParent.prepend(currentTask.DOMdata.taParent);
+                    currentTask.DOMdata.taParent.setAttribute("index", `${currentTask.positionData.index}`);
                     currentTask.DOMdata.taParent.prepend(currentTask.DOMdata.ta);
                     currentTask.DOMdata.taParent.prepend(currentTask.DOMdata.dragZone);
-                    currentTask.DOMdata.parentParent.prepend(currentTask.positionData.dateIndicator);
 
-                    let
-                        editingTAcopy = document.createElement("div");
-
-                    editingTAcopy.style.width = `${currentTask.DOMdata.ta.clientWidth - 1}px`;
-
-                    editingTAcopy.id = "editingTAcopy";
-
-                    currentTask.DOMdata.ta.before(editingTAcopy);
-
-                    handler_editingTA({
-                        target: currentTask.DOMdata.ta
-                    });
-
-                    currentTask.DOMdata.ta.setAttribute("style", `height: ${currentTask.DOMdata.ta.style.height}`);
-                    currentTask.DOMdata.ta.parentNode.childNodes[1].remove();
                 }
+
+                if (!currentTask.positionData.isIndexNew) {
+                    this._rewriteIndexesOnAdd(currentTask);
+                }
+
+                let
+                    editingTAcopy = document.createElement("div");
+
+                editingTAcopy.style.width = `${currentTask.DOMdata.ta.clientWidth - 1}px`;
+
+                editingTAcopy.id = "editingTAcopy";
+
+                currentTask.DOMdata.ta.before(editingTAcopy);
+
+                handler_editingTA({
+                    target: currentTask.DOMdata.ta
+                });
+
+                currentTask.DOMdata.ta.setAttribute("style", `height: ${currentTask.DOMdata.ta.style.height}`);
+                currentTask.DOMdata.ta.parentNode.childNodes[1].remove();
             }
 
             isTaskNew = true;
@@ -105,9 +77,7 @@ class List {
 
         for (let block of allTasks) {
             for (let key in this.listOfTasks) {
-                currentTask = new Task(this.listOfTasks[key].value, this.listOfTasks[key].dateOfCreation, this.listOfTasks[key].taskTerm);
-
-                if (block.id.substring(1) == currentTask.dateOfCreation) {
+                if (block.id.substring(1) == this.listOfTasks[key].dateOfCreation) {
                     isTaskDeleted = false;
                     break;
                 }
@@ -119,9 +89,11 @@ class List {
                     idElem = block.id.substring(1),
                     elemParent = block.parentNode;
 
+                this._rewriteIndexesOnDelete(elemParent, idElem);
+
                 document.getElementById("p" + idElem).remove();
 
-                if (elemParent.childNodes.length - 1 == 0 && elemParent.firstChild.innerHTML != "Today") {
+                if (elemParent.childNodes.length == 1 && elemParent.firstChild.innerHTML != "Today") {
                     list.removeChild(elemParent);
                 }
             }
@@ -138,6 +110,46 @@ class List {
                 document.getElementById("textarea").value = null;
                 document.getElementById("ta2").value = `${System.getDate().substring(0, 4)}-${System.getDate().substring(4, 6)}-${System.getDate().substring(6, 8)}`;
             }, 10);
+        }
+    }
+
+    _rewriteIndexesOnAdd(currentTask) {
+        let
+            currentTaskNumber;
+
+        for (let i = 1; i < currentTask.positionData.finallyParent.childNodes.length; i++) {
+            if (currentTask.positionData.finallyParent.childNodes[i].id.substring(1) == currentTask.dateOfCreation) {
+                currentTaskNumber = i;
+            }
+        }
+
+        for (let i = currentTaskNumber + 1; i < currentTask.positionData.finallyParent.childNodes.length; i++) {
+            let
+                targetTask = currentTask.positionData.finallyParent.childNodes[i];
+
+            targetTask.setAttribute("index", `${Number(targetTask.getAttribute("index")) + 1}`);
+            this.listOfTasks[targetTask.id.substring(1)].index = Number(targetTask.getAttribute("index"));
+            this.listOfTasks[targetTask.id.substring(1)].save();
+        }
+    }
+
+    _rewriteIndexesOnDelete(parent, dateOfCreation) {
+        let
+            currentTaskNumber;
+
+        for (let i = 1; i < parent.childNodes.length; i++) {
+            if (parent.childNodes[i].id.substring(1) == dateOfCreation) {
+                currentTaskNumber = i;
+            }
+        }
+
+        for (let i = currentTaskNumber + 1; i < parent.childNodes.length; i++) {
+            let
+                targetTask = parent.childNodes[i];
+
+            targetTask.setAttribute("index", `${Number(targetTask.getAttribute("index")) - 1}`);
+            this.listOfTasks[targetTask.id.substring(1)].index = Number(targetTask.getAttribute("index"));
+            this.listOfTasks[targetTask.id.substring(1)].save();
         }
     }
 
@@ -169,14 +181,14 @@ class List {
         list.visualisate(false);
     }
 
-    addTask(isTaskNew, dateOfCreation, taskTerm, value) {
+    addTask(isTaskNew, dateOfCreation, taskTerm, value, index) {
         if (!isTaskNew || /\S/.test(value)) {
             if (/\D/.test(String(taskTerm))) {
                 taskTerm = System.getDate();
             }
 
             let
-                currentTask = new Task(value, dateOfCreation, taskTerm);
+                currentTask = new Task(value, dateOfCreation, taskTerm, index);
 
             if (isTaskNew) {
                 currentTask.save();
@@ -227,7 +239,7 @@ class List {
             primitiveObj = {};
 
         for (let key in this.listOfTasks) {
-            primitiveObj[key] = [this.listOfTasks[key].value, this.listOfTasks[key].taskTerm, this.listOfTasks[key].dateOfCreation];
+            primitiveObj[key] = [this.listOfTasks[key].value, this.listOfTasks[key].taskTerm, this.listOfTasks[key].dateOfCreation, this.listOfTasks[key].index];
         }
 
         return primitiveObj;
@@ -238,7 +250,7 @@ class List {
             list = {};
 
         for (let key in primitiveObj) {
-            list[key] = new Task(primitiveObj[key][0], primitiveObj[key][2], primitiveObj[key][1]);
+            list[key] = new Task(primitiveObj[key][0], primitiveObj[key][2], primitiveObj[key][1], primitiveObj[key][3]);
         }
 
         return list;

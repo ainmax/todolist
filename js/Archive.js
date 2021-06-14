@@ -47,7 +47,7 @@ class Archive {
                 block = event.currentTarget.lastChild,
                 taskData = archiveObject[Number(block.id)];
 
-            planObject[taskData[1]] = [taskData[0], System.getDate().substring(0, 8) + taskData[2].substring(8, 14), taskData[1]];
+            planObject[taskData[1]] = [taskData[0], System.getDate().substring(0, 8) + taskData[2].substring(8, 14), taskData[1], 0];
 
             System.setIt("planObject", planObject, true);
 

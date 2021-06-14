@@ -43,7 +43,6 @@ let
                 archive = new Archive(System.getIt("archiveObject", true));
 
             archive.load();
-            document.getElementById("body").scrollIntoView(true);
             document.getElementById("body").scrollIntoView(false);
         } else {
             System.setIt("archiveObject", {}, true);
@@ -63,7 +62,6 @@ let
             if (document.querySelector("[ismoving]") != null) {
                 let
                     elem = document.querySelector("[ismoving]");
-
                 if (dragShiftX == undefined) {
                     dragShiftX = elem.offsetLeft + elem.offsetWidth - event.pageX;
                     dragShiftY = elem.offsetTop + elem.offsetHeight - event.pageY;
@@ -92,7 +90,7 @@ let
                             date = dateOfCreation.substring(0, 8)
                         }
 
-                        list.addTask(true, dateOfCreation, date + dateOfCreation.substring(8), oldTAvalue);
+                        list.addTask(true, dateOfCreation, date + dateOfCreation.substring(8), oldTAvalue, 0);
                         list.visualisate(true);
                     }, 200);
 
@@ -109,7 +107,7 @@ let
                             dateOfCreation = System.getDate(),
                             date = document.getElementById("ta2").value.replace(/-W/g, "");
 
-                        list.addTask(true, dateOfCreation, date + dateOfCreation.substring(8), oldTAvalue);
+                        list.addTask(true, dateOfCreation, date + dateOfCreation.substring(8), oldTAvalue, 0);
                         list.visualisate(true);
                     }, 200);
 
@@ -194,7 +192,7 @@ let
 
         document.addEventListener("keydown", (e) => {
             if (e.altKey && e.code == "ArrowDown" && isTextareaFocused) {
-                document.getElementById("ta2").stepDown();
+                document.getElementById(" ").stepDown();
             }
         })
     }
