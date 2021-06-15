@@ -51,10 +51,6 @@ class List {
 
                 }
 
-                if (!currentTask.positionData.isIndexNew) {
-                    this._rewriteIndexesOnAdd(currentTask);
-                }
-
                 let
                     editingTAcopy = document.createElement("div");
 
@@ -75,6 +71,8 @@ class List {
             isTaskNew = true;
         }
 
+        this._rewriteIndexes();
+
         for (let block of allTasks) {
             for (let key in this.listOfTasks) {
                 if (block.id.substring(1) == this.listOfTasks[key].dateOfCreation) {
@@ -89,8 +87,6 @@ class List {
                     idElem = block.id.substring(1),
                     elemParent = block.parentNode;
 
-                this._rewriteIndexesOnDelete(elemParent, idElem);
-
                 document.getElementById("p" + idElem).remove();
 
                 if (elemParent.childNodes.length == 1 && elemParent.firstChild.innerHTML != "Today") {
@@ -100,6 +96,8 @@ class List {
 
             isTaskDeleted = true;
         }
+
+        this._rewriteIndexes();
 
         if (document.getElementsByClassName("overdue").length != 0) {
             this._moveOverdueToToday();
@@ -113,43 +111,21 @@ class List {
         }
     }
 
-    _rewriteIndexesOnAdd(currentTask) {
+    _rewriteIndexes() {
         let
-            currentTaskNumber;
+            list = document.getElementById("list");
 
-        for (let i = 1; i < currentTask.positionData.finallyParent.childNodes.length; i++) {
-            if (currentTask.positionData.finallyParent.childNodes[i].id.substring(1) == currentTask.dateOfCreation) {
-                currentTaskNumber = i;
+        for (let listChild of list.childNodes) {
+            for (let i = 1; i < listChild.childNodes.length; i++) {
+                let
+                    currentTask = listChild.childNodes[i];
+
+                if (currentTask.getAttribute("isMoving") != "true") {
+                    currentTask.setAttribute("index", `${i - 1}`);
+                    this.listOfTasks[currentTask.id.substring(1)].index = i - 1;
+                    this.listOfTasks[currentTask.id.substring(1)].save();
+                }
             }
-        }
-
-        for (let i = currentTaskNumber + 1; i < currentTask.positionData.finallyParent.childNodes.length; i++) {
-            let
-                targetTask = currentTask.positionData.finallyParent.childNodes[i];
-
-            targetTask.setAttribute("index", `${Number(targetTask.getAttribute("index")) + 1}`);
-            this.listOfTasks[targetTask.id.substring(1)].index = Number(targetTask.getAttribute("index"));
-            this.listOfTasks[targetTask.id.substring(1)].save();
-        }
-    }
-
-    _rewriteIndexesOnDelete(parent, dateOfCreation) {
-        let
-            currentTaskNumber;
-
-        for (let i = 1; i < parent.childNodes.length; i++) {
-            if (parent.childNodes[i].id.substring(1) == dateOfCreation) {
-                currentTaskNumber = i;
-            }
-        }
-
-        for (let i = currentTaskNumber + 1; i < parent.childNodes.length; i++) {
-            let
-                targetTask = parent.childNodes[i];
-
-            targetTask.setAttribute("index", `${Number(targetTask.getAttribute("index")) - 1}`);
-            this.listOfTasks[targetTask.id.substring(1)].index = Number(targetTask.getAttribute("index"));
-            this.listOfTasks[targetTask.id.substring(1)].save();
         }
     }
 
