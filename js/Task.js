@@ -62,6 +62,8 @@ class Task {
                 let
                     currentArea = document.elementFromPoint(event.clientX, event.clientY);
 
+                console.log(currentArea);
+
                 if (currentArea.parentNode.className == "task" || currentArea.className == "task" || (currentArea.className == "listChild" && currentArea.firstChild.innerHTML == "Today" && currentArea.childNodes.length == 1) || currentArea.className == "listChild") {
                     let
                         droppedTaskData;
@@ -73,6 +75,10 @@ class Task {
                             taskTerm: currentArea.parentNode.parentNode.getAttribute("tasksterm").substring(0, 8) + System.getIt("planObject", true)[target.id.substring(1)][1].substring(8),
                             index: Number(currentArea.parentNode.getAttribute("index"))
                         };
+
+                        if (droppedTaskData.index > Number(target.getAttribute("index"))) {
+                            droppedTaskData.index -= 1;
+                        }
                     } else if (currentArea.className == "task") {
                         droppedTaskData = {
                             value: target.lastChild.value,
@@ -80,6 +86,10 @@ class Task {
                             taskTerm: currentArea.parentNode.getAttribute("tasksterm").substring(0, 8) + System.getIt("planObject", true)[target.id.substring(1)][1].substring(8),
                             index: Number(currentArea.getAttribute("index"))
                         };
+
+                        if (droppedTaskData.index > Number(target.getAttribute("index"))) {
+                            droppedTaskData.index -= 1;
+                        }
                     } else if (currentArea.className == "listChild" && currentArea.firstChild.innerHTML == "Today" && currentArea.childNodes.length == 1) {
                         droppedTaskData = {
                             value: target.lastChild.value,
@@ -102,6 +112,8 @@ class Task {
 
                     dragShiftX = undefined;
                     dragShiftY = undefined;
+
+                    console.log(droppedTaskData.index);
 
                     list.addTask(true, droppedTaskData.dateOfCreation, droppedTaskData.taskTerm, droppedTaskData.value, droppedTaskData.index);
                     list.visualisate(false);

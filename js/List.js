@@ -14,6 +14,32 @@ class List {
             isTaskDeleted = true,
             currentTask;
 
+        for (let block of allTasks) {
+            for (let key in this.listOfTasks) {
+                if (block.id.substring(1) == this.listOfTasks[key].dateOfCreation) {
+                    isTaskDeleted = false;
+                    break;
+                }
+            }
+
+            if (isTaskDeleted) {
+                let
+                    list = document.getElementById("list"),
+                    idElem = block.id.substring(1),
+                    elemParent = block.parentNode;
+
+                document.getElementById("p" + idElem).remove();
+
+                if (elemParent.childNodes.length == 1 && elemParent.firstChild.innerHTML != "Today") {
+                    list.removeChild(elemParent);
+                }
+            }
+
+            isTaskDeleted = true;
+        }
+
+        this._rewriteIndexes();
+
         for (let key in this.listOfTasks) {
             currentTask = new Task(this.listOfTasks[key].value, this.listOfTasks[key].dateOfCreation, this.listOfTasks[key].taskTerm, this.listOfTasks[key].index);
 
@@ -69,32 +95,6 @@ class List {
             }
 
             isTaskNew = true;
-        }
-
-        this._rewriteIndexes();
-
-        for (let block of allTasks) {
-            for (let key in this.listOfTasks) {
-                if (block.id.substring(1) == this.listOfTasks[key].dateOfCreation) {
-                    isTaskDeleted = false;
-                    break;
-                }
-            }
-
-            if (isTaskDeleted) {
-                let
-                    list = document.getElementById("list"),
-                    idElem = block.id.substring(1),
-                    elemParent = block.parentNode;
-
-                document.getElementById("p" + idElem).remove();
-
-                if (elemParent.childNodes.length == 1 && elemParent.firstChild.innerHTML != "Today") {
-                    list.removeChild(elemParent);
-                }
-            }
-
-            isTaskDeleted = true;
         }
 
         this._rewriteIndexes();

@@ -90,7 +90,7 @@ let
                             date = dateOfCreation.substring(0, 8)
                         }
 
-                        list.addTask(true, dateOfCreation, date + dateOfCreation.substring(8), oldTAvalue, 0);
+                        list.addTask(true, dateOfCreation, date + dateOfCreation.substring(8), oldTAvalue, null);
                         list.visualisate(true);
                     }, 200);
 
@@ -107,7 +107,7 @@ let
                             dateOfCreation = System.getDate(),
                             date = document.getElementById("ta2").value.replace(/-W/g, "");
 
-                        list.addTask(true, dateOfCreation, date + dateOfCreation.substring(8), oldTAvalue, 0);
+                        list.addTask(true, dateOfCreation, date + dateOfCreation.substring(8), oldTAvalue, null);
                         list.visualisate(true);
                     }, 200);
 
