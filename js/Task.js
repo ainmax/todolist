@@ -31,6 +31,19 @@ class Task {
 
         document.querySelector("#done>div").style = `color: white;`;
 
+        dragShiftX = event.clientX - elem.parentNode.getBoundingClientRect().left;
+        dragShiftY = event.clientY - elem.parentNode.getBoundingClientRect().top;
+
+        let
+            blank = document.createElement("div");
+
+        blank.className = "task";
+        blank.id = "task-blank";
+
+        blank.style = `height: ${elem.parentNode.scrollHeight}px;`;
+
+        elem.parentNode.before(blank);
+
         elem.parentNode.setAttribute("isMoving", "true");
     }
 
@@ -42,14 +55,18 @@ class Task {
             let
                 list = new List(System.getIt("planObject", true));
 
-            document.querySelector("[isMoving]").style.display = "none";
+            target.style.display = "none";
 
             if (document.elementFromPoint(event.clientX, event.clientY).id == "delete_zone") {
+                document.getElementById("task-blank").remove();
+
                 list.deleteTask(target.id.substring(1));
                 list.visualisate(false);
                 dragShiftX = undefined;
                 dragShiftY = undefined;
             } else if (event.pageY <= document.getElementById("archive").offsetHeight) {
+                document.getElementById("task-blank").remove();
+
                 let
                     archive = new Archive(System.getIt("archiveObject", true));
 
@@ -60,65 +77,45 @@ class Task {
                 dragShiftY = undefined;
             } else {
                 let
-                    currentArea = document.elementFromPoint(event.clientX, event.clientY);
+                    currentArea = document.getElementById("task-blank");
 
-                console.log(currentArea);
-
-                if (currentArea.parentNode.className == "task" || currentArea.className == "task" || (currentArea.className == "listChild" && currentArea.firstChild.innerHTML == "Today" && currentArea.childNodes.length == 1) || currentArea.className == "listChild") {
+                if (currentArea) {
                     let
                         droppedTaskData;
 
-                    if (currentArea.parentNode.className == "task") {
-                        droppedTaskData = {
-                            value: target.lastChild.value,
-                            dateOfCreation: target.id.substring(1),
-                            taskTerm: currentArea.parentNode.parentNode.getAttribute("tasksterm").substring(0, 8) + System.getIt("planObject", true)[target.id.substring(1)][1].substring(8),
-                            index: Number(currentArea.parentNode.getAttribute("index"))
-                        };
+                    droppedTaskData = {
+                        value: target.lastChild.value,
+                        dateOfCreation: target.id.substring(1),
+                        taskTerm: currentArea.parentNode.getAttribute("tasksterm").substring(0, 8) + System.getIt("planObject", true)[target.id.substring(1)][1].substring(8),
+                        index: undefined
+                    };
 
-                        if (droppedTaskData.index > Number(target.getAttribute("index"))) {
-                            droppedTaskData.index -= 1;
-                        }
-                    } else if (currentArea.className == "task") {
-                        droppedTaskData = {
-                            value: target.lastChild.value,
-                            dateOfCreation: target.id.substring(1),
-                            taskTerm: currentArea.parentNode.getAttribute("tasksterm").substring(0, 8) + System.getIt("planObject", true)[target.id.substring(1)][1].substring(8),
-                            index: Number(currentArea.getAttribute("index"))
-                        };
-
-                        if (droppedTaskData.index > Number(target.getAttribute("index"))) {
-                            droppedTaskData.index -= 1;
-                        }
-                    } else if (currentArea.className == "listChild" && currentArea.firstChild.innerHTML == "Today" && currentArea.childNodes.length == 1) {
-                        droppedTaskData = {
-                            value: target.lastChild.value,
-                            dateOfCreation: target.id.substring(1),
-                            taskTerm: currentArea.getAttribute("tasksterm").substring(0, 8) + System.getIt("planObject", true)[target.id.substring(1)][1].substring(8),
-                            index: 0
-                        };
+                    if (currentArea.parentNode.childNodes[1] == currentArea) {
+                        droppedTaskData.index = 0;
+                    } else if (currentArea.parentNode.lastChild == currentArea) {
+                        droppedTaskData.index = null;
+                    } else if (currentArea.parentNode.lastChild.previousSibling != currentArea) {
+                        droppedTaskData.index = Number(currentArea.nextSibling.getAttribute("index"));
                     } else {
-                        droppedTaskData = {
-                            value: target.lastChild.value,
-                            dateOfCreation: target.id.substring(1),
-                            taskTerm: currentArea.getAttribute("tasksterm").substring(0, 8) + System.getIt("planObject", true)[target.id.substring(1)][1].substring(8),
-                            index: null
-                        };
+                        droppedTaskData.index = Number(currentArea.previousSibling.getAttribute("index")) + 1;
                     }
 
-                    currentArea.className == "listChild"
+                    if (droppedTaskData.index && droppedTaskData.index > Number(target.getAttribute("index"))) {
+                        droppedTaskData.index -= 1;
+                    }
+
+                    document.getElementById("task-blank").remove();
+
                     list.deleteTask(target.id.substring(1));
                     list.visualisate(false);
 
                     dragShiftX = undefined;
                     dragShiftY = undefined;
 
-                    console.log(droppedTaskData.index);
-
                     list.addTask(true, droppedTaskData.dateOfCreation, droppedTaskData.taskTerm, droppedTaskData.value, droppedTaskData.index);
                     list.visualisate(false);
                 } else {
-                    document.querySelector("[isMoving]").style.display = "block";
+                    target.style.display = "block";
                 }
             }
 
@@ -142,6 +139,10 @@ class Task {
         }
 
         document.querySelector("#done>div").removeAttribute("style");
+
+        if (document.getElementById("task-blank")) {
+            document.getElementById("task-blank").remove();
+        }
 
         setTimeout(() => {
             document.getElementById("delete_zone").removeAttribute("style");
@@ -235,6 +236,7 @@ class Task {
                 once: true,
                 passive: false
             });
+
             document.addEventListener("mouseup", Task.endDrag, {
                 capture: false,
                 once: true,

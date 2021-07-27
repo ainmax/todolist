@@ -1,5 +1,5 @@
 .block {
-    border: inherit;
+    border: none;
     margin-left: 1%;
     width: calc(95% - 1.5em + 2px);
     min-height: calc(1.8em + 2px);
@@ -71,7 +71,7 @@
 
 .listChild {
     border-top: 3px dashed rgba(0, 0, 0, 0.200);
-    min-height: 50px;
+    min-height: 35px;
     padding: 6px;
     padding-bottom: 10px;
     width: 80%;

@@ -39,3 +39,7 @@ div[ismoving]>textarea {
     word-wrap: break-word;
     z-index: -1;
 }
+
+#task-blank {
+    border: 1px solid black;
+}

@@ -74,7 +74,6 @@ class List {
                     currentTask.DOMdata.taParent.setAttribute("index", `${currentTask.positionData.index}`);
                     currentTask.DOMdata.taParent.prepend(currentTask.DOMdata.ta);
                     currentTask.DOMdata.taParent.prepend(currentTask.DOMdata.dragZone);
-
                 }
 
                 let
@@ -90,7 +89,7 @@ class List {
                     target: currentTask.DOMdata.ta
                 });
 
-                currentTask.DOMdata.ta.setAttribute("style", `height: ${currentTask.DOMdata.ta.style.height}`);
+                currentTask.DOMdata.ta.setAttribute("style", `height: ${currentTask.DOMdata.ta.scrollHeight}px`);
                 currentTask.DOMdata.ta.parentNode.childNodes[1].remove();
             }
 
