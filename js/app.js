@@ -224,7 +224,7 @@ let
 
         document.addEventListener("keydown", (e) => {
             if (e.altKey && e.code == "ArrowDown" && isTextareaFocused) {
-                document.getElementById(" ").stepDown();
+                document.getElementById("ta2").stepDown();
             }
         })
     }
