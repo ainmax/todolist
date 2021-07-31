@@ -170,3 +170,19 @@ body {
     outline: none;
     border: hidden;
 }
+
+#information {
+    position: fixed;
+    height: 30px;
+    width: 35px;
+    right: 4px;
+    top: 4px;
+    background-color: rgb(216, 216, 216);
+    border-radius: 50%;
+    padding-top: 10px;
+    padding-left: 8px;
+}
+
+#information:hover {
+    cursor: pointer;
+}

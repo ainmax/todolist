@@ -58,6 +58,10 @@ let
             return false;
         };
 
+        document.getElementById("information").addEventListener("click", () => {
+            window.location = "info.html";
+        });
+
         document.addEventListener("mousemove", (event) => {
             if (document.querySelector("[ismoving]") != null) {
                 let
