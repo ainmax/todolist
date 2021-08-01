@@ -100,11 +100,25 @@ let
                     } else {
                         currentElem.after(newTaskBlank);
                     }
+                } else if (!elemBelow.closest("#list")) {
+                    document.getElementById("task-blank").style.display = "none";
+
+                    let
+                        newTaskBlank = document.getElementById("task-blank");
+
+                    document.getElementById("task-blank").remove();
+                    document.getElementById("body").append(newTaskBlank);
+                } else if (elemBelow.closest(".listChild") && elemBelow.closest(".listChild").childNodes.length <= 2 && (!elemBelow.closest(".listChild").childNodes[1] || elemBelow.closest(".listChild").childNodes[1].getAttribute("isMoving"))) {
+                    let
+                        newTaskBlank = document.getElementById("task-blank");
+
+                    newTaskBlank.style.display = "block";
+
+                    document.getElementById("task-blank").remove();
+
+                    elemBelow.closest(".listChild").append(newTaskBlank);
                 }
 
-                if (!elemBelow.closest("#list")) {
-                    document.getElementById("task-blank").style.display = "none";
-                }
             }
         });
 

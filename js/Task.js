@@ -79,7 +79,7 @@ class Task {
                 let
                     currentArea = document.getElementById("task-blank");
 
-                if (currentArea) {
+                if (currentArea && currentArea.parentNode != document.getElementById("body")) {
                     let
                         droppedTaskData;
 

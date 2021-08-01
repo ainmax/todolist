@@ -1,7 +1,7 @@
 .block {
     border: none;
     margin-left: 1%;
-    width: calc(95% - 1.5em + 2px);
+    width: calc(98% - 1.9em - 4px);
     min-height: calc(1.8em + 2px);
     font-size: 0.8em;
     overflow-y: hidden;
