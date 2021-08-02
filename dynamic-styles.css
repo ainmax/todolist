@@ -36,8 +36,10 @@ div[ismoving]>textarea {
     font-size: 0.8em;
     font-family: Verdana;
     opacity: 0;
+    padding: 2px;
     word-wrap: break-word;
     z-index: -1;
+    min-height: calc(1.8em + 2px);
 }
 
 #task-blank {

@@ -79,7 +79,7 @@ class List {
                 let
                     editingTAcopy = document.createElement("div");
 
-                editingTAcopy.style.width = `${currentTask.DOMdata.ta.clientWidth - 1}px`;
+                editingTAcopy.style.width = `${currentTask.DOMdata.ta.clientWidth - 4}px`;
 
                 editingTAcopy.id = "editingTAcopy";
 
@@ -89,7 +89,7 @@ class List {
                     target: currentTask.DOMdata.ta
                 });
 
-                currentTask.DOMdata.ta.setAttribute("style", `height: ${currentTask.DOMdata.ta.scrollHeight}px`);
+                currentTask.DOMdata.ta.setAttribute("style", `height: ${currentTask.DOMdata.ta.scrollHeight - 4}px`);
                 currentTask.DOMdata.ta.parentNode.childNodes[1].remove();
             }
 

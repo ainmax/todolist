@@ -168,7 +168,7 @@ class Task {
         target.addEventListener("keyup", handler_editingTA);
         target.addEventListener("input", handler_editingTA);
 
-        editingTAcopy.style.width = `${target.clientWidth - 1}px`;
+        editingTAcopy.style.width = `${target.clientWidth - 4}px`;
 
         target.before(editingTAcopy);
 
@@ -177,6 +177,8 @@ class Task {
             once: true,
             passive: false
         });
+
+        handler_editingTA(event);
     }
 
     static endRedact(event) {

@@ -252,5 +252,5 @@ let
 let
     handler_editingTA = function(e) {
         document.getElementById("editingTAcopy").innerHTML = e.target.value.replace(/\n/g, "<br>") + "<br>";
-        e.target.style.height = `${document.getElementById("editingTAcopy").offsetHeight}px`;
+        e.target.style.height = `${document.getElementById("editingTAcopy").clientHeight}px`;
     };
